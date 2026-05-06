@@ -1107,6 +1107,7 @@ if (data.success) {
       document.getElementById('form-wrap').style.display = 'none';
       var s = document.getElementById('form-success');
       s.style.display = 'flex';
+      fbq('track','Lead');
     } else {
       btn.textContent = 'Try Again';
       btn.disabled = false;
