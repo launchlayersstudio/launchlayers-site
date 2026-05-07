@@ -211,9 +211,14 @@ footer{border-top:1px solid var(--border);padding:2rem 3.5rem;display:flex;align
 @media(max-width:480px){
   .nav-cta{display:none;}
   .hero{padding:6rem 1.25rem 2.5rem;min-height:50vh;}
-  .hero-eyebrow{animation:none;opacity:1;transform:none;}
-  h1.hero-h{animation:none;opacity:1;transform:none;}
-  .hero-sub{animation:none;opacity:1;transform:none;}
+}
+
+/* ── MOBILE HERO FIX ── */
+@media(max-width:768px){
+  .hero{min-height:60vh !important;padding-top:6rem !important;}
+  .hero-eyebrow{opacity:1 !important;animation:none !important;transform:none !important;}
+  h1.hero-h{opacity:1 !important;animation:none !important;transform:none !important;}
+  .hero-sub{opacity:1 !important;animation:none !important;transform:none !important;}
 }
 </style>
 </head>
