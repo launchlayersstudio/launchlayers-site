@@ -492,6 +492,17 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
 .hero-actions.spotlit{position:relative;z-index:201;}
 .hero-actions.spotlit .btn-fill{box-shadow:0 0 0 6px rgba(240,237,230,0.08),0 0 40px rgba(240,237,230,0.12);animation:spotlight-pulse 1.2s ease-in-out infinite;}
 @keyframes spotlight-pulse{0%,100%{box-shadow:0 0 0 6px rgba(240,237,230,0.08),0 0 40px rgba(240,237,230,0.12);}50%{box-shadow:0 0 0 10px rgba(240,237,230,0.05),0 0 60px rgba(240,237,230,0.18);}}
+.ba-wrap{position:relative;width:100%;max-width:960px;margin:0 auto;overflow:hidden;border-radius:12px;border:1px solid var(--border2);cursor:ew-resize;user-select:none;-webkit-user-select:none;}
+.ba-after img{width:100%;display:block;}
+.ba-before{position:absolute;top:0;left:0;height:100%;overflow:hidden;width:50%;}
+.ba-before img{width:960px;max-width:none;display:block;}
+.ba-handle{position:absolute;top:0;left:50%;height:100%;transform:translateX(-50%);z-index:10;display:flex;align-items:center;justify-content:center;}
+.ba-line{position:absolute;top:0;bottom:0;width:2px;background:#fff;opacity:0.9;}
+.ba-btn{width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.4);position:relative;z-index:1;flex-shrink:0;}
+.ba-label{position:absolute;top:1rem;font-size:0.62rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:0.3rem 0.875rem;border-radius:50px;z-index:5;}
+.ba-label-before{left:1rem;background:rgba(0,0,0,0.6);color:rgba(255,255,255,0.85);backdrop-filter:blur(8px);}
+.ba-label-after{right:1rem;background:var(--text);color:#080808;}
+@media(max-width:768px){.ba-before img{width:100vw;}}
 </style>
 </head>
 <body>
@@ -698,206 +709,6 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
     <span>Fast Loading</span><span class="sep">·</span>
   </div>
 </div>
-
-<!-- ── WORK ── -->
-<section class="pad" id="work">
-  <div class="gallery-header">
-    <div>
-      <p class="sec-eye">Selected Work</p>
-      <h2 class="sec-title" style="margin-bottom:0;">Built for Every Niche.</h2>
-    </div>
-    <div class="gallery-hint">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M10 4l4 4-4 4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Drag to explore
-    </div>
-  </div>
-
-  <div class="mockups-track" id="track">
-
-    <!-- GYM -->
-    <div class="mcard">
-      <div class="browser">
-        <div class="bbar"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
-       <div class="bwin">
-          <div class="mg">
-            <div class="mg-grid"></div>
-            <div class="mg-nav">
-              <span class="mg-logo">Iron<em>Core</em></span>
-              <div class="mg-links"><span>Classes</span><span>Trainers</span><span>Join</span></div>
-              <span class="mg-ncta">Join Now</span>
-            </div>
-            <div class="mg-body">
-              <div class="mg-etag">Train Different · Est. 2018</div>
-              <div class="mg-h">FORGE<br>YOUR<br><span class="mg-ghost">LIMITS.</span></div>
-              <div class="mg-sub">Elite programs for those who refuse to settle for ordinary results.</div>
-              <div class="mg-btnr">Start Free Trial</div>
-            </div>
-            <div class="mg-bars">
-              <div class="mg-bar" style="height:40%"></div>
-              <div class="mg-bar" style="height:62%"></div>
-              <div class="mg-bar" style="height:50%"></div>
-              <div class="mg-bar" style="height:85%"></div>
-              <div class="mg-bar" style="height:70%"></div>
-              <div class="mg-bar" style="height:100%"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mmeta">
-        <div class="mtag">Fitness &amp; Gym</div>
-        <div class="mname">Iron Core Fitness</div>
-      </div>
-    </div>
-
-    <!-- DENTAL -->
-    <div class="mcard">
-      <div class="browser">
-        <div class="bbar"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
-        <div class="bwin">
-          <div class="md">
-            <div class="md-nav">
-              <span class="md-logo">✦ Bright<span>Smile</span></span>
-              <span class="md-cta">Book Appointment</span>
-            </div>
-            <div class="md-hero">
-              <div>
-                <div class="md-badge">⭐ Trusted by 2,400+ Patients</div>
-                <div class="md-h">Your Perfect<br>Smile Starts<br>Here.</div>
-                <div class="md-p">Modern dentistry with gentle care — complete smile transformations.</div>
-                <div class="md-btn">Book Now →</div>
-              </div>
-              <div class="md-img"></div>
-            </div>
-            <div class="md-stats">
-              <div class="md-stat"><div class="md-sn">98%</div><div class="md-sl">Satisfaction</div></div>
-              <div class="md-stat"><div class="md-sn">12yr</div><div class="md-sl">Experience</div></div>
-              <div class="md-stat"><div class="md-sn">4.9★</div><div class="md-sl">Rating</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mmeta">
-        <div class="mtag">Healthcare &amp; Dental</div>
-        <div class="mname">BrightSmile Dental</div>
-      </div>
-    </div>
-
-    <!-- FASHION -->
-    <div class="mcard">
-      <div class="browser">
-        <div class="bbar"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
-       <div class="bwin">
-          <div class="mf">
-            <div class="mf-marquee">
-              <div class="mf-marquee-inner">
-                <span>SS · 2025</span><em>·</em><span>New Collection</span><em>·</em><span>Made in Italy</span><em>·</em><span>Organic Materials</span><em>·</em><span>SS · 2025</span><em>·</em><span>New Collection</span><em>·</em><span>Made in Italy</span><em>·</em><span>Organic Materials</span><em>·</em>
-              </div>
-            </div>
-            <div class="mf-nav">
-              <span class="mf-logo">Arc Studio</span>
-              <div class="mf-links"><span>Collection</span><span>About</span><span>Stores</span></div>
-              <span class="mf-ncta">Shop Now</span>
-            </div>
-            <div class="mf-body">
-              <div class="mf-left">
-                <div>
-                  <div class="mf-season">SS · 2025 Collection</div>
-                  <div class="mf-h">Wear the<br><span class="mf-hi">Silence.</span></div>
-                  <div class="mf-sub">Minimal pieces crafted for those who let their presence speak first.</div>
-                  <div class="mf-btn">Shop Collection →</div>
-                </div>
-                <div class="mf-stats">
-                  <div class="mf-stat"><span>Pieces</span><strong>48</strong></div>
-                  <div class="mf-stat"><span>Made in</span><strong>Italy</strong></div>
-                </div>
-              </div>
-              <div class="mf-right">
-                <div class="mf-img1"></div>
-                <div class="mf-img2"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mmeta">
-        <div class="mtag">Fashion &amp; Lifestyle</div>
-        <div class="mname">Arc Studio</div>
-      </div>
-    </div>
-
-    <!-- RESTAURANT — Westernised -->
-    <div class="mcard">
-      <div class="browser">
-        <div class="bbar"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
-        <div class="bwin">
-          <div class="mr">
-            <div class="mr-bg"></div>
-            <div class="mr-grain"></div>
-            <div class="mr-inner">
-              <div class="mr-nav">
-                <span class="mr-logo">Ember &amp; Oak</span>
-                <div class="mr-links"><span>Menu</span><span>Reserve</span><span>About</span></div>
-                <span class="mr-ncta">Reserve</span>
-              </div>
-              <div class="mr-body">
-                <div class="mr-etag">Est. 2019 · Fine Dining</div>
-                <div class="mr-h">Seasonal<br><span class="mr-hi">Flavours,</span><br>Redefined.</div>
-                <div class="mr-sub">Locally sourced ingredients crafted for evenings worth remembering.</div>
-                <div class="mr-btnp">Reserve a Table →</div>
-                <div class="mr-awards">
-                  <div class="mr-aw"><span>Recognition</span><strong>Michelin Guide</strong></div>
-                  <div class="mr-aw"><span>Wine List</span><strong>Award of Excellence</strong></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mmeta">
-        <div class="mtag">Restaurant &amp; Dining</div>
-        <div class="mname">Ember &amp; Oak</div>
-      </div>
-    </div>
-
-    <!-- REAL ESTATE — $ prices, US cities -->
-    <div class="mcard">
-      <div class="browser">
-        <div class="bbar"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
-        <div class="bwin">
-          <div class="me">
-            <div class="me-bg"></div>
-            <div class="me-inner">
-              <div class="me-nav">
-                <span class="me-logo">◎ NOVA<span>LIVING</span></span>
-                <div class="me-links"><span>Buy</span><span>Rent</span><span>About</span></div>
-                <span class="me-ncta">List Property</span>
-              </div>
-              <div class="me-body">
-                <div class="me-etag">Premium Real Estate · New York</div>
-                <div class="me-h">Find Your<br><span class="me-hs">Dream Home.</span></div>
-                <div class="me-sub">Curated luxury properties across the most sought-after locations.</div>
-                <div class="me-search">
-                  <div class="me-sinput">Search by neighbourhood or property type...</div>
-                  <div class="me-sbtn">Search →</div>
-                </div>
-                <div class="me-props">
-                  <div class="me-prop"><div class="me-prop-img" style="background:linear-gradient(135deg,#1e3a5f,#2a5285)"><div class="me-prop-tag">Sale</div></div><div class="me-prop-body"><div class="me-prop-price">$485K</div><div class="me-prop-loc">West Village, NY</div></div></div>
-                  <div class="me-prop"><div class="me-prop-img" style="background:linear-gradient(135deg,#1a3550,#253d6b)"><div class="me-prop-tag">Sale</div></div><div class="me-prop-body"><div class="me-prop-price">$1.2M</div><div class="me-prop-loc">Brooklyn Heights</div></div></div>
-                  <div class="me-prop"><div class="me-prop-img" style="background:linear-gradient(135deg,#162d4d,#1e3f6e)"><div class="me-prop-tag">Rent</div></div><div class="me-prop-body"><div class="me-prop-price">$6.5K/mo</div><div class="me-prop-loc">Tribeca Loft</div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mmeta">
-        <div class="mtag">Real Estate</div>
-        <div class="mname">Nova Living</div>
-      </div>
-    </div>
-
-  </div>
-</section>
 
 <!-- ── SERVICES ── -->
 <section class="pad" id="services" style="padding-top:0;">
@@ -1194,6 +1005,26 @@ document.querySelectorAll('.svc, .proc-grid > div, .mcard').forEach(function(el)
     actions.classList.remove('spotlit');
   }
   history.replaceState(null,'','/index.html');
+})();
+
+(function(){
+  var wrap=document.getElementById('ba-wrap');
+  if(!wrap)return;
+  var before=document.getElementById('ba-before');
+  var handle=document.getElementById('ba-handle');
+  var dragging=false;
+  function setPos(x){
+    var rect=wrap.getBoundingClientRect();
+    var pct=Math.min(95,Math.max(5,(x-rect.left)/rect.width*100));
+    before.style.width=pct+'%';
+    handle.style.left=pct+'%';
+  }
+  wrap.addEventListener('mousedown',function(e){dragging=true;setPos(e.clientX);e.preventDefault();});
+  document.addEventListener('mouseup',function(){dragging=false;});
+  document.addEventListener('mousemove',function(e){if(dragging)setPos(e.clientX);});
+  wrap.addEventListener('touchstart',function(e){dragging=true;setPos(e.touches[0].clientX);},{passive:true});
+  document.addEventListener('touchend',function(){dragging=false;});
+  document.addEventListener('touchmove',function(e){if(dragging)setPos(e.touches[0].clientX);},{passive:true});
 })();
 </script>
 </body>
