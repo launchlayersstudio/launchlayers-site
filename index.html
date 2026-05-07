@@ -1046,6 +1046,32 @@ document.querySelectorAll('.svc, .proc-grid > div, .mcard').forEach(function(el)
   }
   history.replaceState(null,'','/index.html');
 })();
+
+/* ── BEFORE/AFTER SLIDER ── */
+(function(){
+  var wrap=document.getElementById('ba-wrap');
+  if(!wrap)return;
+  var before=document.getElementById('ba-before');
+  var handle=document.getElementById('ba-handle');
+  var isDragging=false;
+
+  function setPos(clientX){
+    var rect=wrap.getBoundingClientRect();
+    var pct=Math.min(96,Math.max(4,(clientX-rect.left)/rect.width*100));
+    before.style.width=pct+'%';
+    handle.style.left=pct+'%';
+  }
+
+  handle.addEventListener('mousedown',function(e){isDragging=true;e.preventDefault();});
+  wrap.addEventListener('mousedown',function(e){isDragging=true;setPos(e.clientX);e.preventDefault();});
+  document.addEventListener('mouseup',function(){isDragging=false;});
+  document.addEventListener('mousemove',function(e){if(isDragging)setPos(e.clientX);});
+
+  handle.addEventListener('touchstart',function(e){isDragging=true;},{passive:true});
+  wrap.addEventListener('touchstart',function(e){isDragging=true;setPos(e.touches[0].clientX);},{passive:true});
+  document.addEventListener('touchend',function(){isDragging=false;});
+  document.addEventListener('touchmove',function(e){if(isDragging)setPos(e.touches[0].clientX);},{passive:true});
+})();
 </script>
 </body>
 </html>
