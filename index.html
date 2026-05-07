@@ -502,7 +502,16 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
 .ba-label{position:absolute;top:1rem;font-size:0.62rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:0.3rem 0.875rem;border-radius:50px;z-index:11;}
 .ba-label-before{left:1rem;background:rgba(0,0,0,0.6);color:rgba(255,255,255,0.85);backdrop-filter:blur(8px);}
 .ba-label-after{right:1rem;background:var(--text);color:#080808;}
-@media(max-width:768px){.ba-wrap{height:360px;}.ba-before img{width:100vw;height:360px;object-position:left top;}}
+@media(max-width:768px){
+  .ba-wrap{height:auto;cursor:default;border:none;background:transparent;gap:1rem;display:flex;flex-direction:column;}
+  .ba-before{position:static;width:100% !important;height:auto;overflow:hidden;border-radius:12px;border:1px solid var(--border2);}
+  .ba-before img{position:static;width:100%;height:200px;object-fit:cover;object-position:top;}
+  .ba-after-frame{position:static;width:100%;height:200px;border-radius:12px;border:1px solid var(--border2);overflow:hidden;}
+  .ba-after-frame iframe{width:100%;height:100%;border:none;display:block;pointer-events:none;}
+  .ba-handle{display:none;}
+  .ba-label-before{top:0.5rem;left:0.5rem;}
+  .ba-label-after{display:block;right:0.5rem;top:0.5rem;}
+}
 </style>
 </head>
 <body>
@@ -745,6 +754,7 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
 
     <div class="ba-label ba-label-before">Before</div>
     <div class="ba-label ba-label-after">After — Live Site</div>
+    <div class="ba-label-mobile-after" style="display:none;">After — Live Site</div>
   </div>
 
   <p style="font-size:0.72rem;color:var(--muted);margin-top:1rem;text-align:center;letter-spacing:0.1em;text-transform:uppercase;">← Drag handle to compare →</p>
