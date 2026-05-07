@@ -215,6 +215,17 @@ footer{border-top:1px solid var(--border);padding:2rem 3.5rem;display:flex;align
   .nav-spacer{height:56px;}
   .hero{padding:2rem 1.25rem 3rem;}
 }
+  .cc-wrap{position:relative;width:130px;flex-shrink:0;}
+.cc-selected{display:flex;align-items:center;gap:6px;padding:0.7rem 0.9rem;background:var(--bg);border:1px solid var(--border2);border-radius:10px;cursor:pointer;font-size:0.8125rem;color:var(--text);user-select:none;transition:border-color 0.2s;}
+.cc-selected:hover{border-color:rgba(255,255,255,0.3);}
+.cc-selected .cc-arrow{margin-left:auto;opacity:0.4;font-size:0.6rem;transition:transform 0.2s;}
+.cc-wrap.open .cc-arrow{transform:rotate(180deg);}
+.cc-dropdown{position:absolute;top:calc(100% + 6px);left:0;width:220px;background:#1a1a1a;border:1px solid var(--border2);border-radius:10px;z-index:999;max-height:240px;overflow-y:auto;scrollbar-width:thin;display:none;}
+.cc-wrap.open .cc-dropdown{display:block;}
+.cc-search{width:100%;background:#111;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.75rem;padding:0.6rem 0.875rem;outline:none;}
+.cc-search::placeholder{color:rgba(240,237,230,0.3);}
+.cc-option{display:flex;align-items:center;gap:8px;padding:0.5rem 0.875rem;font-size:0.8rem;cursor:pointer;transition:background 0.15s;}
+.cc-option:hover{background:rgba(255,255,255,0.06);}
 </style>
 </head>
 <body>
@@ -247,8 +258,47 @@ footer{border-top:1px solid var(--border);padding:2rem 3.5rem;display:flex;align
           <input class="form-input" type="text" id="f-brand" name="brand_name" placeholder="Acme Inc." required>
         </div>
         <div class="form-group">
+          <label class="form-label" for="f-pkg">Package Interested In<span class="form-opt">(optional)</span></label>
+          <select class="form-input" id="f-pkg" name="package_interested" style="cursor:pointer;">
+            <option value="" disabled selected>— Select a package —</option>
+            <option value="Landing Page — $600–$800">Landing Page — $600–$800</option>
+            <option value="Business Website — $1,200–$1,500">Business Website — $1,200–$1,500</option>
+            <option value="Growth Website — $1,800–$2,500">Growth Website — $1,800–$2,500</option>
+            <option value="Online Store — $2,800–$3,800">Online Store — $2,800–$3,800</option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="f-wa">Phone Number<span class="form-opt">(optional)</span></label>
+            <div style="display:flex;gap:0.5rem;">
+              <div class="cc-wrap" id="cc-wrap">
+                <div class="cc-selected" id="cc-selected" onclick="toggleCC()">
+                  <span id="cc-flag"><img src="https://flagcdn.com/16x12/us.png" width="16" height="12" style="border-radius:2px;"></span>
+                  <span id="cc-code">+1</span>
+                  <span class="cc-arrow">▼</span>
+                </div>
+                <div class="cc-dropdown" id="cc-dropdown">
+                  <input class="cc-search" type="text" placeholder="Search country..." oninput="filterCC(this.value)" onclick="event.stopPropagation()">
+                  <div id="cc-list"></div>
+                </div>
+                <input type="hidden" name="phone_code" id="cc-value" value="+1">
+              </div>
+              <input class="form-input" type="tel" id="f-wa" name="phone_number" placeholder="(555) 000-0000" autocomplete="tel" style="flex:1;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="f-domain">Current Domain<span class="form-opt">(if you have one)</span></label>
+            <input class="form-input" type="text" id="f-domain" name="current_domain" placeholder="yoursite.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-ref">Website You Like the Look Of<span class="form-opt">(optional)</span></label>
+          <input class="form-input" type="text" id="f-ref" name="reference_site" placeholder="e.g. linear.app, stripe.com">
+        </div>
+        <div class="form-group">
           <label class="form-label" for="f-desc">Project Description<span class="form-req">*</span></label>
-          <textarea class="form-textarea" id="f-desc" name="project_description" placeholder="Which package interests you? Tell us about your business, goals, and anything else we should know." required></textarea>
+          <textarea class="form-textarea" id="f-desc" name="project_description" placeholder="Describe your project — type of site, what it should achieve, your industry, specific features, timeline, and anything else we should know." required></textarea>
         </div>
         <button type="submit" class="form-submit" id="submit-btn">Send Brief →</button>
       </form>
@@ -553,6 +603,38 @@ document.querySelectorAll('.edu-item,.pkg,.why-item,.g-item').forEach(function(e
   el.style.opacity='0';el.style.transform='translateY(20px)';
   obs.observe(el);
 });
+
+/* ── COUNTRY PICKER ── */
+var countries=[
+  ["US","+1"],["GB","+44"],["AU","+61"],["CA","+1"],["NZ","+64"],
+  ["IE","+353"],["DE","+49"],["FR","+33"],["NL","+31"],["BE","+32"],
+  ["CH","+41"],["AT","+43"],["ES","+34"],["IT","+39"],["PT","+351"],
+  ["SE","+46"],["NO","+47"],["DK","+45"],["FI","+358"],["PL","+48"],
+  ["GR","+30"],["TR","+90"],["RU","+7"],["AE","+971"],["SA","+966"],
+  ["IN","+91"],["PK","+92"],["BD","+880"],["CN","+86"],["JP","+81"],
+  ["KR","+82"],["SG","+65"],["MY","+60"],["ID","+62"],["PH","+63"],
+  ["TH","+66"],["VN","+84"],["MX","+52"],["BR","+55"],["AR","+54"],
+  ["ZA","+27"],["NG","+234"],["KE","+254"],["EG","+20"],["HK","+852"]
+];
+function renderCC(list){
+  var html='';
+  list.forEach(function(c){
+    html+='<div class="cc-option" onclick="selectCC(\''+c[0]+'\',\''+c[1]+'\')"><img src="https://flagcdn.com/16x12/'+c[0].toLowerCase()+'.png" width="16" height="12" style="border-radius:2px;vertical-align:middle;"> '+c[0]+' '+c[1]+'</div>';
+  });
+  document.getElementById('cc-list').innerHTML=html;
+}
+function filterCC(q){
+  renderCC(countries.filter(function(c){return c[0].toLowerCase().includes(q.toLowerCase())||c[1].includes(q);}));
+}
+function selectCC(code,dial){
+  document.getElementById('cc-flag').innerHTML='<img src="https://flagcdn.com/16x12/'+code.toLowerCase()+'.png" width="16" height="12" style="border-radius:2px;">';
+  document.getElementById('cc-code').textContent=dial;
+  document.getElementById('cc-value').value=dial+'('+code+')';
+  document.getElementById('cc-wrap').classList.remove('open');
+}
+function toggleCC(){document.getElementById('cc-wrap').classList.toggle('open');}
+document.addEventListener('click',function(e){if(document.getElementById('cc-wrap')&&!document.getElementById('cc-wrap').contains(e.target))document.getElementById('cc-wrap').classList.remove('open');});
+renderCC(countries);
 </script>
 </body>
 </html>
