@@ -1185,7 +1185,7 @@ document.querySelectorAll('.svc, .proc-grid > div, .mcard').forEach(function(el)
         })
       });
       var data=await res.json();
-      var reply=data?.candidates?.[0]?.content?.parts?.[0]?.text||"Sorry, I couldn't get a response. Email us at hello@launchlayers.in and we'll get back to you.";
+      var reply=data?.candidates?.[0]?.content?.parts?.[0]?.text||(data?.error?.code===429?"We're getting a lot of messages right now — give it a moment and try again!":"Sorry, I couldn't get a response. Email us at hello@launchlayers.in and we'll get back to you.");
       typing.remove();
       addMsg(reply,'bot');
       history.push({role:'model',parts:[{text:reply}]});
