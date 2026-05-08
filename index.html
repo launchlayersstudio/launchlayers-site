@@ -507,11 +507,11 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
   .ba-wrap{height:auto;cursor:default;border:none;background:transparent;gap:0.5rem;display:flex;flex-direction:column;}
   .ba-before{position:static;width:100% !important;height:auto;overflow:hidden;border-radius:12px;border:1px solid var(--border2);order:2;}
   .ba-before img{position:static;width:100%;height:200px;object-fit:cover;object-position:top;}
-  .ba-after-frame{position:static;width:100%;height:198px;border-radius:12px;border:1px solid var(--border2);overflow:hidden;order:4;background:var(--bg);}
-  .ba-after-frame iframe{width:960px!important;height:520px!important;transform:scale(0.38);transform-origin:top left;border:none;display:block;pointer-events:none;}
+  .ba-after-frame{position:relative;width:100%;height:198px;border-radius:12px;border:1px solid var(--border2);overflow:hidden;order:4;background:var(--bg);}
+  .ba-after-frame iframe{position:absolute;top:0;left:0;width:960px!important;height:520px!important;transform:scale(0.38);transform-origin:top left;border:none;display:block;pointer-events:none;}
   .ba-handle{display:none;}
-  .ba-label-before{position:static;background:none;color:var(--muted);backdrop-filter:none;font-size:0.65rem;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0.2em;text-transform:uppercase;padding:0;border-radius:0;order:1;margin-bottom:0.25rem;}
-  .ba-label-after{display:block;position:static;background:none;color:var(--muted);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;padding:0;border-radius:0;order:3;margin-top:0.75rem;margin-bottom:0.25rem;}
+  .ba-label-before{position:static;background:none;color:var(--text);backdrop-filter:none;font-size:1.75rem;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-0.02em;text-transform:uppercase;padding:0;border-radius:0;order:1;margin-bottom:0.5rem;}
+  .ba-label-after{display:block;position:static;background:none;color:var(--text);font-size:1.75rem;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-0.02em;text-transform:uppercase;padding:0;border-radius:0;order:3;margin-top:1.25rem;margin-bottom:0.5rem;}
 }
 </style>
 </head>
@@ -724,7 +724,7 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
 <section class="pad" id="work" style="background:var(--bg2);border-top:1px solid var(--border);">
   <p class="sec-eye">Real Client Transformation</p>
   <h2 class="sec-title">See What We <em>Actually Do.</em></h2>
-  <p style="font-size:0.9375rem;color:var(--muted);font-weight:300;margin-top:-2rem;margin-bottom:3rem;max-width:520px;line-height:1.75;">Same gym. Same content. Completely different website. Drag the handle to compare — the right side is live and scrollable.</p>
+  <p style="font-size:0.9375rem;color:var(--muted);font-weight:300;margin-top:-2rem;margin-bottom:3rem;max-width:520px;line-height:1.75;">Same business. Same content. Completely different website. Drag the handle to compare — the right side is live and scrollable.</p>
 
   <div class="ba-wrap" id="ba-wrap">
 
