@@ -1131,21 +1131,10 @@ document.querySelectorAll('.svc, .proc-grid > div, .mcard').forEach(function(el)
   var input=document.getElementById('chat-input');
   var send=document.getElementById('chat-send');
   var open=false;
+  var history=[];
+  var GEMINI_KEY='AIzaSyDnlwj-YMwWCtjrZxVOrAFcxJSuqgtFWn4';
 
-  var qaMap=[
-    {k:['price','cost','charge','how much','pricing','package'],a:"Our packages start at $600 for a landing page, up to $3,800 for a full online store. You can see all pricing at <a href='/pricing.html' style='color:var(--text);'>launchlayers.in/pricing</a> — or just tell me what you need and I'll point you to the right one."},
-    {k:['long','time','days','weeks','turnaround','deliver','fast'],a:"Most websites go live within 7–14 days once we have everything from you. Simpler landing pages can be done faster. We'll always give you a clear timeline before we start."},
-    {k:['revision','change','edit','update','amend'],a:"Every project includes 2 rounds of revisions. We work closely with you throughout so by review time, we're usually already aligned."},
-    {k:['niche','gym','dental','restaurant','fashion','real estate','ecommerce','barbershop','type'],a:"We work across gyms, dental clinics, fashion brands, restaurants, real estate, e-commerce stores, barbershops, and personal brands. If your business needs a website, we can build it."},
-    {k:['redesign','existing','old site','current website','rebuild'],a:"Redesigns are one of our most common projects. Whether your site looks outdated or just isn't converting, we can rebuild it from the ground up."},
-    {k:['mobile','phone','responsive','tablet'],a:"Every site we build is mobile-first by default. It will look and perform great on phones, tablets, and desktops."},
-    {k:['payment','deposit','pay','invoice','transfer'],a:"We take a 20% deposit to begin, with the remaining balance due on delivery. We accept bank transfer and major online payment methods."},
-    {k:['seo','google','rank','search','analytics'],a:"All our sites are SEO-optimised out of the box — clean code, fast load times, meta tags, and Google Analytics connected. We also verify your site on Google Search Console at launch."},
-    {k:['content','copy','text','images','logo','provide'],a:"We'll guide you on exactly what's needed. At minimum we need your logo, any images you have, and key text about your business. If you need help with copy, just ask."},
-    {k:['maintenance','support','after','ongoing','update'],a:"Yes — we offer post-launch support packages for edits, updates, and technical maintenance. Just let us know and we'll put something together."},
-    {k:['contact','reach','email','whatsapp','talk','speak','call'],a:"You can reach us at hello@launchlayers.in or fill out the project brief on the site and we'll get back to you within 24 hours."},
-    {k:['start','begin','get started','how do','process','next step'],a:"Simple — fill out our short project brief using the button below and we'll review it and reply within 24 hours. Takes about 2 minutes."},
-  ];
+  var SYSTEM='You are the assistant for Launch Layers, a premium web design studio based in India that builds websites for businesses worldwide. Keep replies concise, friendly, and helpful. Only answer questions related to Launch Layers services. Here is everything about us: We build modern, high-converting websites for gyms, dental clinics, fashion brands, restaurants, real estate agencies, e-commerce stores, barbershops, and personal brands. Packages: Landing Page $600–$800, Business Website $1,200–$1,500, Growth Website $1,800–$2,500, Online Store $2,800–$3,800. Turnaround: 7–14 days. Revisions: 2 rounds included. Payment: 20% deposit upfront, rest on delivery. Bank transfer and online payments accepted. All sites are mobile-first, SEO optimised, and include Google Analytics. We also offer post-launch maintenance. Contact: hello@launchlayers.in. To get started, fill out the project brief on the site. If asked anything unrelated to web design or Launch Layers, politely redirect the conversation.';
 
   var defaultChips=['Pricing','How long?','Get started','Contact us'];
 
@@ -1155,6 +1144,16 @@ document.querySelectorAll('.svc, .proc-grid > div, .mcard').forEach(function(el)
     d.innerHTML=text;
     msgs.appendChild(d);
     msgs.scrollTop=msgs.scrollHeight;
+  }
+
+  function addTyping(){
+    var d=document.createElement('div');
+    d.className='msg bot';
+    d.id='typing-indicator';
+    d.innerHTML='<span style="opacity:0.5">...</span>';
+    msgs.appendChild(d);
+    msgs.scrollTop=msgs.scrollHeight;
+    return d;
   }
 
   function setChips(list){
@@ -1168,25 +1167,33 @@ document.querySelectorAll('.svc, .proc-grid > div, .mcard').forEach(function(el)
     });
   }
 
-  function getReply(text){
-    var t=text.toLowerCase();
-    for(var i=0;i<qaMap.length;i++){
-      for(var j=0;j<qaMap[i].k.length;j++){
-        if(t.indexOf(qaMap[i].k[j])>-1)return qaMap[i].a;
-      }
-    }
-    return "Good question — I'm not sure about that one. Drop us a message at <strong>hello@launchlayers.in</strong> and we'll get back to you within 24 hours.";
-  }
-
-  function handleInput(text){
+  async function handleInput(text){
     if(!text.trim())return;
     addMsg(text,'user');
     input.value='';
     chips.innerHTML='';
-    setTimeout(function(){
-      addMsg(getReply(text),'bot');
-      setChips(defaultChips);
-    },420);
+    history.push({role:'user',parts:[{text:text}]});
+    var typing=addTyping();
+    try{
+      var res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key='+GEMINI_KEY,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          system_instruction:{parts:[{text:SYSTEM}]},
+          contents:history,
+          generationConfig:{maxOutputTokens:300,temperature:0.7}
+        })
+      });
+      var data=await res.json();
+      var reply=data?.candidates?.[0]?.content?.parts?.[0]?.text||"Sorry, I couldn't get a response. Email us at hello@launchlayers.in and we'll get back to you.";
+      typing.remove();
+      addMsg(reply,'bot');
+      history.push({role:'model',parts:[{text:reply}]});
+    }catch(err){
+      typing.remove();
+      addMsg("Something went wrong on my end. Reach us at <strong>hello@launchlayers.in</strong> and we'll sort you out.","bot");
+    }
+    setChips(defaultChips);
   }
 
   btn.addEventListener('click',function(){
