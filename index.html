@@ -513,9 +513,54 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
   .ba-label-before{position:static;background:none;color:var(--text);backdrop-filter:none;font-size:1.25rem;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-0.01em;text-transform:uppercase;padding:0;border-radius:0;order:1;margin-bottom:0.5rem;}
   .ba-label-after{display:block;position:static;background:none;color:var(--text);font-size:1.25rem;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-0.01em;text-transform:uppercase;padding:0;border-radius:0;order:3;margin-top:1.25rem;margin-bottom:0.5rem;}
 }
+
+/* ── AI CHATBOT ── */
+.chat-btn{position:fixed;bottom:1.75rem;right:1.75rem;z-index:900;width:52px;height:52px;border-radius:50%;background:var(--text);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(0,0,0,0.4);transition:transform 0.2s,opacity 0.2s;}
+.chat-btn:hover{transform:scale(1.08);}
+.chat-btn svg{transition:opacity 0.2s,transform 0.2s;}
+.chat-box{position:fixed;bottom:5.5rem;right:1.75rem;z-index:900;width:340px;max-height:520px;background:#141414;border:1px solid var(--border2);border-radius:20px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.6);opacity:0;pointer-events:none;transform:translateY(16px) scale(0.97);transition:opacity 0.25s,transform 0.25s;}
+.chat-box.open{opacity:1;pointer-events:all;transform:translateY(0) scale(1);}
+.chat-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.75rem;}
+.chat-avatar{width:34px;height:34px;border-radius:50%;background:var(--text);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.chat-avatar img{width:20px;height:20px;object-fit:contain;filter:invert(1);}
+.chat-info strong{display:block;font-size:0.8125rem;font-weight:700;letter-spacing:-0.01em;}
+.chat-info span{font-size:0.7rem;color:var(--muted);}
+.chat-messages{flex:1;overflow-y:auto;padding:1rem 1.25rem;display:flex;flex-direction:column;gap:0.75rem;scrollbar-width:none;}
+.chat-messages::-webkit-scrollbar{display:none;}
+.msg{max-width:85%;font-size:0.8rem;line-height:1.6;padding:0.625rem 0.875rem;border-radius:14px;animation:msg-in 0.2s ease;}
+@keyframes msg-in{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.msg.bot{background:var(--bg3);color:var(--text);border-bottom-left-radius:4px;align-self:flex-start;}
+.msg.user{background:var(--text);color:#080808;border-bottom-right-radius:4px;align-self:flex-end;font-weight:600;}
+.chat-chips{padding:0 1.25rem 0.75rem;display:flex;flex-wrap:wrap;gap:0.4rem;}
+.chip{background:transparent;border:1px solid var(--border2);color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;padding:0.35rem 0.75rem;border-radius:50px;cursor:pointer;transition:all 0.15s;text-align:left;}
+.chip:hover{border-color:rgba(255,255,255,0.3);color:var(--text);}
+.chat-input-row{padding:0.75rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:0.5rem;}
+.chat-input{flex:1;background:var(--bg);border:1px solid var(--border2);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.8rem;padding:0.55rem 0.875rem;border-radius:50px;outline:none;transition:border-color 0.2s;}
+.chat-input::placeholder{color:rgba(240,237,230,0.25);}
+.chat-input:focus{border-color:rgba(255,255,255,0.3);}
+.chat-send{background:var(--text);color:#080808;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity 0.2s;}
+.chat-send:hover{opacity:0.8;}
+@media(max-width:480px){.chat-box{width:calc(100vw - 2rem);right:1rem;bottom:5rem;}.chat-btn{bottom:1.25rem;right:1rem;}}
 </style>
 </head>
 <body>
+
+<!-- ── CHATBOT ── -->
+<button class="chat-btn" id="chat-btn" aria-label="Open chat">
+  <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2C6.03 2 2 5.8 2 10.5c0 1.9.65 3.65 1.75 5.07L2.5 19.5l4.23-1.18A9.3 9.3 0 0011 19c4.97 0 9-3.8 9-8.5S15.97 2 11 2z" fill="#080808"/></svg>
+</button>
+<div class="chat-box" id="chat-box">
+  <div class="chat-head">
+    <div class="chat-avatar"><img src="/logo.png" alt="LL"></div>
+    <div class="chat-info"><strong>Launch Layers</strong><span>Typically replies instantly</span></div>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-chips" id="chat-chips"></div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chat-input" type="text" placeholder="Ask us anything…" autocomplete="off">
+    <button class="chat-send" id="chat-send"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="#080808" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
+</div>
 
 <!-- ── SPOTLIGHT OVERLAY ── -->
 <div class="spotlight-overlay" id="spotlight">
@@ -1075,6 +1120,88 @@ document.querySelectorAll('.svc, .proc-grid > div, .mcard').forEach(function(el)
   }
   updateScale();
   window.addEventListener('resize',updateScale);
+})();
+
+/* ── CHATBOT ── */
+(function(){
+  var btn=document.getElementById('chat-btn');
+  var box=document.getElementById('chat-box');
+  var msgs=document.getElementById('chat-messages');
+  var chips=document.getElementById('chat-chips');
+  var input=document.getElementById('chat-input');
+  var send=document.getElementById('chat-send');
+  var open=false;
+
+  var qaMap=[
+    {k:['price','cost','charge','how much','pricing','package'],a:"Our packages start at $600 for a landing page, up to $3,800 for a full online store. You can see all pricing at <a href='/pricing.html' style='color:var(--text);'>launchlayers.in/pricing</a> — or just tell me what you need and I'll point you to the right one."},
+    {k:['long','time','days','weeks','turnaround','deliver','fast'],a:"Most websites go live within 7–14 days once we have everything from you. Simpler landing pages can be done faster. We'll always give you a clear timeline before we start."},
+    {k:['revision','change','edit','update','amend'],a:"Every project includes 2 rounds of revisions. We work closely with you throughout so by review time, we're usually already aligned."},
+    {k:['niche','gym','dental','restaurant','fashion','real estate','ecommerce','barbershop','type'],a:"We work across gyms, dental clinics, fashion brands, restaurants, real estate, e-commerce stores, barbershops, and personal brands. If your business needs a website, we can build it."},
+    {k:['redesign','existing','old site','current website','rebuild'],a:"Redesigns are one of our most common projects. Whether your site looks outdated or just isn't converting, we can rebuild it from the ground up."},
+    {k:['mobile','phone','responsive','tablet'],a:"Every site we build is mobile-first by default. It will look and perform great on phones, tablets, and desktops."},
+    {k:['payment','deposit','pay','invoice','transfer'],a:"We take a 20% deposit to begin, with the remaining balance due on delivery. We accept bank transfer and major online payment methods."},
+    {k:['seo','google','rank','search','analytics'],a:"All our sites are SEO-optimised out of the box — clean code, fast load times, meta tags, and Google Analytics connected. We also verify your site on Google Search Console at launch."},
+    {k:['content','copy','text','images','logo','provide'],a:"We'll guide you on exactly what's needed. At minimum we need your logo, any images you have, and key text about your business. If you need help with copy, just ask."},
+    {k:['maintenance','support','after','ongoing','update'],a:"Yes — we offer post-launch support packages for edits, updates, and technical maintenance. Just let us know and we'll put something together."},
+    {k:['contact','reach','email','whatsapp','talk','speak','call'],a:"You can reach us at hello@launchlayers.in or fill out the project brief on the site and we'll get back to you within 24 hours."},
+    {k:['start','begin','get started','how do','process','next step'],a:"Simple — fill out our short project brief using the button below and we'll review it and reply within 24 hours. Takes about 2 minutes."},
+  ];
+
+  var defaultChips=['Pricing','How long?','Get started','Contact us'];
+
+  function addMsg(text,type){
+    var d=document.createElement('div');
+    d.className='msg '+type;
+    d.innerHTML=text;
+    msgs.appendChild(d);
+    msgs.scrollTop=msgs.scrollHeight;
+  }
+
+  function setChips(list){
+    chips.innerHTML='';
+    list.forEach(function(label){
+      var b=document.createElement('button');
+      b.className='chip';
+      b.textContent=label;
+      b.onclick=function(){handleInput(label);};
+      chips.appendChild(b);
+    });
+  }
+
+  function getReply(text){
+    var t=text.toLowerCase();
+    for(var i=0;i<qaMap.length;i++){
+      for(var j=0;j<qaMap[i].k.length;j++){
+        if(t.indexOf(qaMap[i].k[j])>-1)return qaMap[i].a;
+      }
+    }
+    return "Good question — I'm not sure about that one. Drop us a message at <strong>hello@launchlayers.in</strong> and we'll get back to you within 24 hours.";
+  }
+
+  function handleInput(text){
+    if(!text.trim())return;
+    addMsg(text,'user');
+    input.value='';
+    chips.innerHTML='';
+    setTimeout(function(){
+      addMsg(getReply(text),'bot');
+      setChips(defaultChips);
+    },420);
+  }
+
+  btn.addEventListener('click',function(){
+    open=!open;
+    box.classList.toggle('open',open);
+    if(open&&msgs.children.length===0){
+      setTimeout(function(){
+        addMsg("Hey 👋 I'm the Launch Layers assistant. Ask me anything about our services, pricing, or process.","bot");
+        setChips(defaultChips);
+      },200);
+    }
+  });
+
+  send.addEventListener('click',function(){handleInput(input.value);});
+  input.addEventListener('keydown',function(e){if(e.key==='Enter')handleInput(input.value);});
 })();
 
 /* ── BEFORE/AFTER SLIDER ── */
