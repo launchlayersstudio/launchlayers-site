@@ -1224,19 +1224,19 @@ document.querySelectorAll('.svc, .proc-grid > div, .mcard').forEach(function(el)
   }
 
   var targets=document.querySelectorAll('.sec-eye,.sec-title,.cta-h');
-  var lines=[];
-  targets.forEach(function(el){lines.push(wrapReveal(el));});
+  targets.forEach(function(el){wrapReveal(el);});
 
   var revObs=new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting){
-        setTimeout(function(){e.target.classList.add('revealed');},60);
+        var line=e.target.querySelector('.reveal-line');
+        if(line)setTimeout(function(){line.classList.add('revealed');},60);
         revObs.unobserve(e.target);
       }
     });
-  },{threshold:0.25});
+  },{threshold:0.15});
 
-  lines.forEach(function(line){revObs.observe(line);});
+  targets.forEach(function(el){revObs.observe(el);});
 })();
 
 /* ── BEFORE/AFTER SLIDER ── */
