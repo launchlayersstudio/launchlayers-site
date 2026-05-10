@@ -513,11 +513,6 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
   .ba-label-after{display:block;position:static;background:none;color:var(--text);font-size:1.25rem;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-0.01em;text-transform:uppercase;padding:0;border-radius:0;order:3;margin-top:1.25rem;margin-bottom:0.5rem;}
 }
 
-/* ── TEXT REVEAL ── */
-.reveal-wrap{overflow:hidden;display:block;padding-bottom:0.18em;margin-bottom:-0.18em;}
-.reveal-line{display:block;transform:translateY(105%);transition:transform 0.9s cubic-bezier(0.16,1,0.3,1);}
-.reveal-line.revealed{transform:translateY(0);}
-  
 /* ── AI CHATBOT ── */
 .chat-btn{position:fixed;bottom:1.75rem;right:1.75rem;z-index:900;width:52px;height:52px;border-radius:50%;background:var(--text);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(0,0,0,0.4);transition:transform 0.2s,opacity 0.2s;}
 .chat-btn:hover{transform:scale(1.08);}
@@ -546,8 +541,12 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
 .chat-send:hover{opacity:0.8;}
 @media(max-width:480px){.chat-box{width:calc(100vw - 2rem);right:1rem;bottom:5rem;}.chat-btn{bottom:1.25rem;right:1rem;}}
 </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
+
+<div id="curtain" style="position:fixed;inset:0;background:#080808;z-index:9999;pointer-events:none;transform:translateX(0);"></div>
 
 <!-- ── CHATBOT ── -->
 <button class="chat-btn" id="chat-btn" aria-label="Open chat">
@@ -712,11 +711,7 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
 <!-- ── HERO ── -->
 <section class="hero">
   <p class="hero-eyebrow">Premium Web Design Studio</p>
-  <h1 class="hero-h">
-  <span class="reveal-wrap"><span class="reveal-line" id="hl1">We Build Websites</span></span>
-  <span class="reveal-wrap"><span class="reveal-line" id="hl2">That <em>Actually</em></span></span>
-  <span class="reveal-wrap"><span class="reveal-line" id="hl3">Convert.</span></span>
-</h1>
+  <h1 class="hero-h">We Build Websites That <em>Actually</em> Convert.</h1>
   <p class="hero-sub">Modern, performance-first websites for gyms, clinics, brands, and businesses that are serious about growth.</p>
   <div class="hero-actions">
     <button class="btn-fill" onclick="openModal()">Get My Website →</button>
@@ -1058,16 +1053,6 @@ if(track){
   });
 }
 
-/* ── SCROLL REVEAL ── */
-var obs = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) {
-    if (e.isIntersecting) {
-      e.target.style.opacity = '1';
-      e.target.style.transform = 'translateY(0)';
-    }
-  });
-}, { threshold: 0.1 });
-  
   /* ── FAQ ── */
 document.querySelectorAll('.faq-item').forEach(function(item){
   item.addEventListener('click',function(){
@@ -1075,12 +1060,6 @@ document.querySelectorAll('.faq-item').forEach(function(item){
     document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');i.querySelector('.faq-icon').textContent='+';});
     if(!isOpen){this.classList.add('open');this.querySelector('.faq-icon').textContent='−';}
   });
-});
-document.querySelectorAll('.svc, .proc-grid > div, .mcard').forEach(function(el) {
-  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(20px)';
-  obs.observe(el);
 });
 
 /* ── SPOTLIGHT ON ARRIVAL FROM PRICING ── */
@@ -1200,44 +1179,88 @@ document.querySelectorAll('.svc, .proc-grid > div, .mcard').forEach(function(el)
   input.addEventListener('keydown',function(e){if(e.key==='Enter')handleInput(input.value);});
 })();
 
-/* ── TEXT REVEAL ── */
+/* ── GSAP ── */
+gsap.registerPlugin(ScrollTrigger);
+
 (function(){
-  var heroLines=['hl1','hl2','hl3'];
-  heroLines.forEach(function(id,i){
-    setTimeout(function(){
-      var el=document.getElementById(id);
-      if(el)el.classList.add('revealed');
-    },120+i*140);
+  var curtain=document.getElementById('curtain');
+
+  gsap.to(curtain,{
+    x:'-100%',
+    duration:0.7,
+    ease:'power3.inOut',
+    delay:0.05
   });
 
-  function wrapReveal(el){
-    var wrap=document.createElement('span');
-    wrap.className='reveal-wrap';
-    wrap.style.display='block';
-    var inner=document.createElement('span');
-    inner.className='reveal-line';
-    while(el.firstChild){inner.appendChild(el.firstChild);}
-    wrap.appendChild(inner);
-    el.appendChild(wrap);
-    return inner;
+  document.querySelectorAll('a[href]').forEach(function(link){
+    var href=link.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('mailto')||href.startsWith('http'))return;
+    link.addEventListener('click',function(e){
+      e.preventDefault();
+      curtain.style.transform='translateX(100%)';
+      gsap.to(curtain,{
+        x:'0%',
+        duration:0.55,
+        ease:'power3.inOut',
+        onComplete:function(){
+          window.location.href=href;
+        }
+      });
+    });
+  });
+
+  function splitWords(el){
+    var text=el.innerText;
+    el.innerHTML='';
+    text.split(' ').forEach(function(word,i){
+      var wrap=document.createElement('span');
+      wrap.style.cssText='overflow:hidden;display:inline-block;vertical-align:bottom;padding-bottom:0.12em;';
+      var inner=document.createElement('span');
+      inner.style.cssText='display:inline-block;';
+      inner.textContent=(i===0?'':' ')+word;
+      wrap.appendChild(inner);
+      el.appendChild(wrap);
+    });
+    return el.querySelectorAll('span > span');
   }
 
-  var targets=document.querySelectorAll('.sec-eye,.sec-title,.cta-h');
-  targets.forEach(function(el){wrapReveal(el);});
-
-  var revObs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        var line=e.target.querySelector('.reveal-line');
-        if(line)setTimeout(function(){line.classList.add('revealed');},60);
-        revObs.unobserve(e.target);
-      }
+  var heroEl=document.querySelector('h1.hero-h');
+  if(heroEl){
+    var heroWords=splitWords(heroEl);
+    gsap.from(heroWords,{
+      y:'105%',
+      opacity:0,
+      duration:0.9,
+      ease:'power4.out',
+      stagger:0.06,
+      delay:0.6
     });
-  },{threshold:0.15});
+  }
 
-  targets.forEach(function(el){revObs.observe(el);});
+  document.querySelectorAll('.sec-eye,.sec-title,.cta-h,.edu-intro').forEach(function(el){
+    var words=splitWords(el);
+    gsap.from(words,{
+      scrollTrigger:{trigger:el,start:'top 88%'},
+      y:'105%',
+      opacity:0,
+      duration:0.8,
+      ease:'power4.out',
+      stagger:0.04
+    });
+  });
+
+  document.querySelectorAll('.edu-item,.pkg,.why-item,.g-item,.svc,.proc-grid > div').forEach(function(el){
+    gsap.from(el,{
+      scrollTrigger:{trigger:el,start:'top 90%'},
+      y:32,
+      opacity:0,
+      duration:0.7,
+      ease:'power3.out'
+    });
+  });
+
 })();
-
+  
     /* ── HERO PARALLAX ── */
 (function(){
   var hero=document.querySelector('.hero');
