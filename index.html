@@ -545,6 +545,9 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
 .chat-send{background:var(--text);color:#080808;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity 0.2s;}
 .chat-send:hover{opacity:0.8;}
 @media(max-width:480px){.chat-box{width:calc(100vw - 2rem);right:1rem;bottom:5rem;}.chat-btn{bottom:1.25rem;right:1rem;}}
+  section.pad::after,.cta-sec::after,.packages::after,.why::after,.guarantee::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to bottom,transparent,var(--bg));pointer-events:none;z-index:1;}
+section.pad,section.hero,.cta-sec,.packages,.why,.guarantee{position:relative;}
+section.pad[style*="bg2"]::after,.packages::after,.guarantee::after{background:linear-gradient(to bottom,transparent,var(--bg2));}
 </style>
 </head>
 <body>
@@ -1236,6 +1239,29 @@ document.querySelectorAll('.svc, .proc-grid > div, .mcard').forEach(function(el)
   },{threshold:0.15});
 
   targets.forEach(function(el){revObs.observe(el);});
+})();
+
+    /* ── HERO PARALLAX ── */
+(function(){
+  var hero=document.querySelector('.hero');
+  if(!hero)return;
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    hero.style.backgroundPosition='center '+(y*0.35)+'px';
+  },{passive:true});
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    if(hero.querySelector('.hero-eyebrow'))return;
+  },{passive:true});
+  var style=document.createElement('style');
+  style.textContent='.hero::before{background-position:center 0;transition:background-position 0s;}';
+  document.head.appendChild(style);
+  window.addEventListener('scroll',function(){
+    hero.style.setProperty('--py',window.scrollY*0.3+'px');
+  },{passive:true});
+  var s=document.createElement('style');
+  s.textContent='.hero::before{transform:translateY(var(--py,0));transition:none;}';
+  document.head.appendChild(s);
 })();
 
 /* ── BEFORE/AFTER SLIDER ── */
