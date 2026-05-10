@@ -628,38 +628,6 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
         <div class="form-group">
   <label class="form-label" for="f-wa">Phone Number<span class="form-opt">(optional)</span></label>
   <div style="display:flex;gap:0.5rem;">
-    <div class="cc-wrap" id="cc-wrap">
-      <div class="cc-selected" id="cc-selected" onclick="toggleCC()">
-        <span id="cc-flag"><img src="https://flagcdn.com/16x12/us.png" width="16" height="12" style="border-radius:2px;"></span>
-        <span id="cc-code">+1</span>
-        <span class="cc-arrow">▼</span>
-      </div>
-      <div class="cc-dropdown" id="cc-dropdown">
-        <input class="cc-search" type="text" placeholder="Search country..." oninput="filterCC(this.value)" onclick="event.stopPropagation()">
-        <div id="cc-list"></div>
-      </div>
-      <input type="hidden" name="whatsapp_code" id="cc-value" value="+1">
-    </div>
-    <input class="form-input" type="tel" id="f-wa" name="whatsapp_number" placeholder="(555) 000-0000" autocomplete="tel" style="flex:1;">
-  </div>
-</div>
-  <div class="cc-wrap" id="cc-wrap">
-    <div class="cc-selected" id="cc-selected" onclick="toggleCC()">
-      <span id="cc-flag"><img src="https://flagcdn.com/16x12/us.png" width="16" height="12" style="border-radius:2px;"></span>
-      <span id="cc-code">+1</span>
-      <span class="cc-arrow">▼</span>
-    </div>
-    <div class="cc-dropdown" id="cc-dropdown">
-      <input class="cc-search" type="text" placeholder="Search country..." oninput="filterCC(this.value)" onclick="event.stopPropagation()">
-      <div id="cc-list"></div>
-    </div>
-    <input type="hidden" name="whatsapp_code" id="cc-value" value="+1">
-  </div>
-  <input class="form-input" type="tel" id="f-wa" name="whatsapp_number" placeholder="(555) 000-0000" autocomplete="tel" style="flex:1;">
-</div>
-          </div>
-          
-        </div>
 
         <div class="form-group">
           <label class="form-label" for="f-desc">Project Description<span class="form-req">*</span></label>
