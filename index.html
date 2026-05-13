@@ -524,6 +524,9 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
 @media(max-width:1024px){.contact-grid{grid-template-columns:1fr;gap:3rem;}}
 @media(max-width:768px){.contact-right{padding:1.5rem 1.25rem;}}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
 
@@ -1107,48 +1110,46 @@ function scrollToForm(){
   document.addEventListener('touchend',function(){isDragging=false;});
   document.addEventListener('touchmove',function(e){if(isDragging)setPos(e.touches[0].clientX);},{passive:true});
 })();
-    /* ── SCROLL REVEAL ── */
-var obs=new IntersectionObserver(function(entries){
-  entries.forEach(function(e){if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});
-},{threshold:0.08});
-document.querySelectorAll('.edu-item,.pkg,.why-item,.g-item,.svc,.proc-grid > div').forEach(function(el){
-  el.style.transition='opacity 0.6s ease, transform 0.6s ease';
-  el.style.opacity='0';el.style.transform='translateY(20px)';
-  obs.observe(el);
+
+/* ── LENIS SMOOTH SCROLL ── */
+const lenis = new Lenis();
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+gsap.ticker.lagSmoothing(0);
+
+/* ── GSAP HERO REVEAL ── */
+gsap.registerPlugin(ScrollTrigger);
+
+var tl = gsap.timeline({defaults:{ease:'power4.out'}});
+tl.fromTo('#hl1',{yPercent:105},{yPercent:0,duration:1},0.1)
+  .fromTo('#hl2',{yPercent:105},{yPercent:0,duration:1},0.22)
+  .fromTo('#hl3',{yPercent:105},{yPercent:0,duration:1},0.34);
+
+/* ── GSAP SCROLL REVEALS ── */
+gsap.utils.toArray('.svc,.proc-grid > div,.faq-item,.ct-item').forEach(function(el,i){
+  gsap.fromTo(el,
+    {opacity:0, y:40},
+    {opacity:1, y:0, duration:0.8, ease:'power3.out',
+     scrollTrigger:{trigger:el, start:'top 88%', toggleActions:'play none none none'},
+     delay: (i % 3) * 0.1}
+  );
 });
 
-/* ── TEXT REVEAL ── */
-(function(){
-  ['hl1','hl2','hl3'].forEach(function(id,i){
-    setTimeout(function(){
-      var el=document.getElementById(id);
-      if(el)el.classList.add('revealed');
-    },120+i*140);
-  });
+gsap.utils.toArray('.sec-eye,.sec-title,.cta-h,.contact-sub').forEach(function(el){
+  gsap.fromTo(el,
+    {opacity:0, y:30},
+    {opacity:1, y:0, duration:0.9, ease:'power3.out',
+     scrollTrigger:{trigger:el, start:'top 85%', toggleActions:'play none none none'}}
+  );
+});
 
-  function wrapReveal(el){
-    var wrap=document.createElement('span');
-    wrap.className='reveal-wrap';
-    wrap.style.display='block';
-    var inner=document.createElement('span');
-    inner.className='reveal-line';
-    while(el.firstChild){inner.appendChild(el.firstChild);}
-    wrap.appendChild(inner);
-    el.appendChild(wrap);
-    return inner;
+/* ── NAV SHRINK ON SCROLL ── */
+ScrollTrigger.create({
+  start:'top -60',
+  onUpdate:function(self){
+    document.querySelector('nav').style.padding = self.progress > 0 ? '0.75rem 3.5rem' : '1.25rem 3.5rem';
+    document.querySelector('nav').style.transition = 'padding 0.3s ease';
   }
-  var targets=document.querySelectorAll('.sec-eye,.sec-title,.cta-h');
-  targets.forEach(function(el){wrapReveal(el);});
-  var revObs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        var line=e.target.querySelector('.reveal-line');
-        if(line)setTimeout(function(){line.classList.add('revealed');},60);
-        revObs.unobserve(e.target);
-      }
-    });
-  },{threshold:0.15});
-  targets.forEach(function(el){revObs.observe(el);});
-})();
+});
 </script>
 </html>
