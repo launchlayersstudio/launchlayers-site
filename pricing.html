@@ -250,12 +250,24 @@ footer{border-top:1px solid var(--border);padding:2rem 3.5rem;display:flex;align
     border-bottom:1px solid var(--border);
   }
 }
+  /* ── NAV FADE IN ── */
+nav{opacity:0;}
+nav.nav-ready{opacity:1;}
+
+/* ── PAGE TRANSITION ── */
+.page-transition{position:fixed;inset:0;background:var(--bg);z-index:9999;pointer-events:none;opacity:0;}
+
+/* ── BUTTON SHINE ── */
+.btn-fill{position:relative;overflow:hidden;}
+.btn-fill::after{content:'';position:absolute;top:0;left:-75%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent);transform:skewX(-20deg);transition:left 0.5s ease;}
+.btn-fill:hover::after{left:130%;}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
+  <div class="page-transition" id="page-transition"></div>
 
 <!-- ── MODAL ── -->
 <div class="modal-overlay" id="modal-overlay">
@@ -660,6 +672,29 @@ gsap.utils.toArray('.sec-eye,.sec-title,.cta-h,.cta-sub').forEach(function(el){
   window.addEventListener('scroll',function(){
     nav.classList.toggle('scrolled',window.scrollY>60);
   },{passive:true});
+})();
+  /* ── NAV FADE IN ── */
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    document.querySelector('nav').classList.add('nav-ready');
+  },100);
+});
+
+/* ── PAGE TRANSITION ── */
+(function(){
+  var overlay=document.getElementById('page-transition');
+  gsap.to(overlay,{opacity:0,duration:0.5,ease:'power2.out',onComplete:function(){overlay.style.display='none';}});
+  document.querySelectorAll('a[href]').forEach(function(link){
+    var href=link.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('mailto')||href.startsWith('http'))return;
+    link.addEventListener('click',function(e){
+      e.preventDefault();
+      overlay.style.display='block';
+      gsap.fromTo(overlay,{opacity:0},{opacity:1,duration:0.35,ease:'power2.in',onComplete:function(){
+        window.location.href=href;
+      }});
+    });
+  });
 })();
 </script>
 </body>
