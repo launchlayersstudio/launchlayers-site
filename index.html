@@ -856,9 +856,6 @@ function injectLinkBlock(iframe){
   }catch(err){}
 }
 function closePv(){document.getElementById('pv-overlay').classList.remove('active');document.body.classList.remove('no-scroll');setTimeout(function(){document.getElementById('pv-iframe').srcdoc='';},400);}
-document.getElementById('pv-close').addEventListener('click',closePv);
-document.getElementById('pv-overlay').addEventListener('click',function(e){if(e.target===this)closePv();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.getElementById('pv-overlay').classList.contains('active'))closePv();});
     
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' && document.getElementById('cc-wrap').classList.contains('open')) {
