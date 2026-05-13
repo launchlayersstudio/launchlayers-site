@@ -1111,7 +1111,7 @@ function scrollToForm(){
 })();
 
 /* ── LENIS SMOOTH SCROLL ── */
-const lenis = new Lenis({lerp:0.12,smoothWheel:true});lenis.on('scroll', ScrollTrigger.update);
+const lenis = new Lenis({lerp:0.12,smoothWheel:true,wheelMultiplier:1.4});lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add((time) => { lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
 
