@@ -860,19 +860,10 @@ document.getElementById('pv-close').addEventListener('click',closePv);
 document.getElementById('pv-overlay').addEventListener('click',function(e){if(e.target===this)closePv();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.getElementById('pv-overlay').classList.contains('active'))closePv();});
     
-/* ── MODAL ── */
-function openModal() {
-  document.getElementById('modal-overlay').classList.add('active');
-  document.body.classList.add('no-scroll');
-}
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('active');
-  document.body.classList.remove('no-scroll');
-}
-document.getElementById('pv-close').addEventListener('click',closePv);
-document.getElementById('pv-overlay').addEventListener('click',function(e){if(e.target===this)closePv();});
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Escape' && document.getElementById('cc-wrap').classList.contains('open')) {
+    document.getElementById('cc-wrap').classList.remove('open');
+  }
 });
   var countries=[
   ["🇺🇸","US","+1"],["🇬🇧","GB","+44"],["🇦🇺","AU","+61"],["🇨🇦","CA","+1"],["🇳🇿","NZ","+64"],
