@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Work — Launch Layers</title>
+<meta name="description" content="Conversion-focused websites built for local businesses across the US. See what we build.">
+<meta property="og:title" content="Our Work — Launch Layers">
+<meta property="og:description" content="Conversion-focused websites built for local businesses across the US.">
+<meta property="og:url" content="https://www.launchlayers.in/work.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.launchlayers.in/og-image.png">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#080808;--bg2:#111111;--text:#f0ede6;--muted:rgba(240,237,230,0.5);--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:0.028;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 3.5rem;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);background:rgba(8,8,8,0.75);border-bottom:1px solid var(--border);opacity:0;transition:opacity 0.4s ease;}
+nav.ready{opacity:1;}
+.logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-text{font-weight:700;font-size:0.9375rem;color:var(--text);letter-spacing:0.01em;}
+.nav-links{display:flex;gap:2.5rem;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.8125rem;letter-spacing:0.04em;transition:color 0.2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--text);transition:width 0.3s ease;}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.nav-links a:hover,.nav-links a.active{color:var(--text);}
+.nav-cta{background:var(--text);color:#080808;padding:0.55rem 1.25rem;font-size:0.8125rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0.01em;transition:opacity 0.2s;border-radius:50px;cursor:pointer;border:none;text-decoration:none;}
+.nav-cta:hover{opacity:0.82;}
+@media(min-width:769px){
+  nav{left:1.5rem;right:1.5rem;top:1rem;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,0.55),0 2px 8px rgba(0,0,0,0.3);border:1px solid var(--border2);}
+  nav.scrolled{left:0;right:0;top:0;border-radius:0;box-shadow:none;border:none;border-bottom:1px solid var(--border);}
+}
+
+/* HEADER */
+.page-header{padding:10rem 3.5rem 6rem;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
+.page-header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:72px 72px;pointer-events:none;}
+.page-header::after{content:'';position:absolute;bottom:-200px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(255,255,255,0.022),transparent 70%);pointer-events:none;}
+.header-inner{position:relative;z-index:1;max-width:760px;}
+.header-eye{font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.875rem;}
+.header-eye::before{content:'';width:1.75rem;height:1px;background:var(--muted);}
+.header-h{font-weight:800;font-size:clamp(3rem,6vw,6rem);line-height:0.93;letter-spacing:-0.035em;margin-bottom:1.75rem;}
+.header-h em{font-style:italic;font-weight:400;color:var(--muted);}
+.header-sub{font-size:1.075rem;color:var(--muted);max-width:500px;line-height:1.72;font-weight:300;}
+
+/* STATUS BAR */
+.status-bar{padding:1.75rem 3.5rem;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.status-left{display:flex;align-items:center;gap:0.875rem;}
+.status-dot{width:7px;height:7px;border-radius:50%;background:#f0ede6;animation:pdot 2s infinite;}
+@keyframes pdot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(240,237,230,0.4);}50%{opacity:0.6;box-shadow:0 0 0 6px rgba(240,237,230,0);}}
+.status-text{font-size:0.8rem;color:var(--muted);font-weight:300;}
+.status-text strong{color:var(--text);font-weight:600;}
+.status-right{font-size:0.75rem;color:rgba(240,237,230,0.25);letter-spacing:0.04em;}
+
+/* PROJECT SLOTS */
+.projects-section{padding:0 3.5rem 6rem;}
+.project-slot{border-bottom:1px solid var(--border);padding:4rem 0;display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;align-items:center;opacity:0;transform:translateY(30px);}
+.project-slot:first-child{border-top:1px solid var(--border);margin-top:4rem;}
+.project-slot.reverse{direction:rtl;}
+.project-slot.reverse > *{direction:ltr;}
+
+.slot-info{display:flex;flex-direction:column;gap:1.5rem;}
+.slot-index{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(240,237,230,0.2);}
+.slot-badge{display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border2);border-radius:50px;padding:0.3rem 0.875rem;font-size:0.7rem;letter-spacing:0.08em;color:rgba(240,237,230,0.3);width:fit-content;}
+.slot-badge-dot{width:5px;height:5px;border-radius:50%;background:rgba(240,237,230,0.25);animation:pdot 2.5s infinite;}
+.slot-name{font-weight:800;font-size:clamp(1.75rem,3vw,2.75rem);line-height:1;letter-spacing:-0.025em;color:rgba(240,237,230,0.12);}
+.slot-desc{font-size:0.875rem;color:rgba(240,237,230,0.2);line-height:1.75;font-weight:300;max-width:380px;}
+.slot-meta{display:flex;flex-direction:column;gap:0.5rem;}
+.slot-meta-row{display:flex;align-items:center;gap:0.75rem;}
+.slot-meta-lbl{font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(240,237,230,0.15);width:80px;flex-shrink:0;}
+.slot-meta-val{font-size:0.75rem;color:rgba(240,237,230,0.18);}
+.slot-status{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.72rem;color:rgba(240,237,230,0.28);padding-top:0.25rem;}
+.slot-status-dot{width:5px;height:5px;border-radius:50%;background:rgba(240,237,230,0.3);animation:pdot 2.5s infinite;}
+
+/* BROWSER */
+.browser-shell{background:var(--bg2);border:1px solid rgba(255,255,255,0.06);border-radius:16px;overflow:hidden;}
+.browser-bar{background:#1c1c1c;padding:0.6rem 0.875rem;display:flex;align-items:center;gap:0.75rem;border-bottom:1px solid rgba(255,255,255,0.04);}
+.browser-dots{display:flex;gap:5px;}
+.browser-dots span{width:9px;height:9px;border-radius:50%;}
+.bd-r{background:rgba(255,95,87,0.22);}
+.bd-y{background:rgba(254,188,46,0.22);}
+.bd-g{background:rgba(40,200,64,0.22);}
+.browser-url{flex:1;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.04);border-radius:5px;padding:0.25rem 0.75rem;font-size:0.68rem;color:rgba(240,237,230,0.12);text-align:center;letter-spacing:0.02em;}
+.browser-screen{height:320px;background:var(--bg);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.screen-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);background-size:40px 40px;}
+.screen-body{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;padding:2rem;}
+.screen-icon{width:52px;height:52px;border:1px solid rgba(255,255,255,0.07);border-radius:14px;display:flex;align-items:center;justify-content:center;opacity:0.5;}
+.screen-lbl{font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,237,230,0.16);}
+.screen-txt{font-size:0.75rem;color:rgba(240,237,230,0.1);line-height:1.65;max-width:180px;font-weight:300;}
+.skeleton{position:absolute;bottom:0;left:0;right:0;padding:1.25rem;display:flex;flex-direction:column;gap:0.5rem;}
+.sk{height:5px;border-radius:3px;background:rgba(255,255,255,0.03);}
+.sk.s{width:38%;}
+.sk.m{width:62%;}
+.sk.l{width:88%;}
+
+/* WHAT WE BUILD */
+.expect-section{padding:5rem 3.5rem;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.sec-eye{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:0.875rem;}
+.sec-title{font-weight:800;font-size:clamp(1.75rem,3.5vw,2.75rem);line-height:0.97;letter-spacing:-0.025em;margin-bottom:3rem;}
+.sec-title em{font-style:italic;font-weight:400;color:var(--muted);}
+.expect-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.expect-item{background:var(--bg2);padding:2.25rem 2rem;}
+.expect-num{font-weight:800;font-size:2.5rem;color:rgba(255,255,255,0.04);line-height:1;margin-bottom:1.25rem;letter-spacing:-0.04em;}
+.expect-t{font-weight:700;font-size:1rem;margin-bottom:0.625rem;letter-spacing:-0.01em;}
+.expect-d{font-size:0.8125rem;color:var(--muted);line-height:1.72;font-weight:300;}
+
+/* CTA */
+.work-cta{padding:7rem 3.5rem;position:relative;overflow:hidden;border-top:1px solid var(--border);}
+.work-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 110%,rgba(255,255,255,0.022),transparent 60%);pointer-events:none;}
+.cta-inner{position:relative;z-index:1;max-width:640px;}
+.cta-eye{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+.cta-h{font-weight:800;font-size:clamp(2.5rem,5vw,4.5rem);line-height:0.95;letter-spacing:-0.03em;margin-bottom:1.5rem;}
+.cta-h em{font-style:italic;font-weight:400;color:var(--muted);}
+.cta-sub{font-size:1rem;color:var(--muted);font-weight:300;line-height:1.72;margin-bottom:2.5rem;max-width:440px;}
+.cta-row{display:flex;gap:0.875rem;align-items:center;}
+.btn-fill{background:var(--text);color:#080808;padding:0.875rem 2rem;font-size:0.9rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;text-decoration:none;transition:opacity 0.2s;display:inline-block;border-radius:50px;position:relative;overflow:hidden;}
+.btn-fill::after{content:'';position:absolute;top:0;left:-75%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent);transform:skewX(-20deg);transition:left 0.5s ease;}
+.btn-fill:hover::after{left:130%;}
+.btn-fill:hover{opacity:0.88;}
+.btn-out{border:1px solid var(--border2);color:var(--muted);padding:0.875rem 2rem;font-size:0.9rem;font-family:'Plus Jakarta Sans',sans-serif;text-decoration:none;transition:all 0.2s;display:inline-block;border-radius:50px;}
+.btn-out:hover{border-color:rgba(255,255,255,0.3);color:var(--text);}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:2rem 3.5rem;display:flex;align-items:center;justify-content:space-between;}
+.ft-copy{font-size:0.75rem;color:var(--muted);}
+.ft-mail{font-size:0.75rem;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.ft-mail:hover{color:var(--text);}
+
+.page-transition{position:fixed;inset:0;background:var(--bg);z-index:9999;pointer-events:none;opacity:0;}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  nav{padding:1.25rem 2rem;}
+  .page-header,.projects-section,.expect-section,.work-cta{padding-left:2rem;padding-right:2rem;}
+  .status-bar{padding-left:2rem;padding-right:2rem;}
+  footer{padding:2rem;}
+  .project-slot{gap:3rem;padding:3rem 0;}
+}
+@media(max-width:768px){
+  nav{padding:1rem 1.25rem;}
+  .nav-links{display:none;}
+  .page-header{padding:7rem 1.5rem 3rem;}
+  .header-h{font-size:clamp(2.5rem,9vw,3.5rem);}
+  .status-bar{padding:1.25rem 1.5rem;}
+  .projects-section{padding:0 1.5rem 4rem;}
+  .project-slot{grid-template-columns:1fr;gap:2rem;padding:2.5rem 0;}
+  .project-slot.reverse{direction:ltr;}
+  .project-slot:first-child{margin-top:2.5rem;}
+  .browser-screen{height:200px;}
+  .expect-section{padding:3.5rem 1.5rem;}
+  .expect-grid{grid-template-columns:1fr;}
+  .work-cta{padding:4rem 1.5rem;}
+  .cta-h{font-size:clamp(2rem,8vw,3rem);}
+  .cta-row{flex-direction:column;align-items:stretch;max-width:360px;}
+  .btn-fill,.btn-out{text-align:center;}
+  footer{flex-direction:column;gap:0.875rem;text-align:center;padding:1.5rem 1.25rem;}
+}
+@media(max-width:480px){
+  .page-header{padding:6.5rem 1.25rem 2.5rem;}
+  .projects-section,.expect-section,.work-cta{padding-left:1.25rem;padding-right:1.25rem;}
+  footer{padding:1.5rem 1.25rem;}
+}
+</style>
+</head>
+<body>
+<div class="page-transition" id="page-transition"></div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="/index.html" class="logo-wrap">
+    <img src="/logo.png" alt="LL" style="width:28px;height:28px;object-fit:contain;filter:invert(1);">
+    <span class="logo-text">Launch Layers</span>
+  </a>
+  <div class="nav-links">
+    <a href="/index.html#contact">Contact</a>
+    <a href="/index.html#services">Services</a>
+    <a href="/index.html#process">Process</a>
+    <a href="/index.html#faq">FAQ</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/work.html" class="active">Work</a>
+  </div>
+  <a href="/index.html#contact" class="nav-cta">Get My Website →</a>
+</nav>
+
+<!-- HEADER -->
+<section class="page-header">
+  <div class="header-inner">
+    <p class="header-eye" id="he">Our Work</p>
+    <h1 class="header-h" id="hh">Built to<br><em>Convert.</em></h1>
+    <p class="header-sub" id="hs">We're currently building our first client projects. Each one is conversion-focused, psychology-led, and designed around one thing — getting your visitor to take action.</p>
+  </div>
+</section>
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <div class="status-left">
+    <div class="status-dot"></div>
+    <p class="status-text"><strong>2 projects</strong> currently in production — live previews coming soon</p>
+  </div>
+  <span class="status-right">Updated as work ships</span>
+</div>
+
+<!-- PROJECT SLOTS -->
+<section class="projects-section">
+
+  <!-- SLOT 1 -->
+  <div class="project-slot" id="slot-1">
+    <div class="slot-info">
+      <span class="slot-index">01</span>
+      <div class="slot-badge"><span class="slot-badge-dot"></span>In Production</div>
+      <h2 class="slot-name">Project One</h2>
+      <p class="slot-desc">A conversion-focused website for a US local business — designed around psychology, copy hierarchy, and one clear action for the visitor to take.</p>
+      <div class="slot-meta">
+        <div class="slot-meta-row"><span class="slot-meta-lbl">Industry</span><span class="slot-meta-val">Local Service Business</span></div>
+        <div class="slot-meta-row"><span class="slot-meta-lbl">Deliverable</span><span class="slot-meta-val">Full website design & build</span></div>
+        <div class="slot-meta-row"><span class="slot-meta-lbl">Timeline</span><span class="slot-meta-val">Under 2 weeks</span></div>
+      </div>
+      <div class="slot-status"><span class="slot-status-dot"></span>Live preview coming soon</div>
+    </div>
+    <div>
+      <div class="browser-shell">
+        <div class="browser-bar">
+          <div class="browser-dots"><span class="bd-r"></span><span class="bd-y"></span><span class="bd-g"></span></div>
+          <div class="browser-url">in production...</div>
+        </div>
+        <div class="browser-screen">
+          <div class="screen-grid"></div>
+          <div class="screen-body">
+            <div class="screen-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <span class="screen-lbl">In Production</span>
+            <p class="screen-txt">This project is currently being built. Live preview dropping soon.</p>
+          </div>
+          <div class="skeleton"><div class="sk s"></div><div class="sk l"></div><div class="sk m"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLOT 2 -->
+  <div class="project-slot reverse" id="slot-2">
+    <div class="slot-info">
+      <span class="slot-index">02</span>
+      <div class="slot-badge"><span class="slot-badge-dot"></span>In Production</div>
+      <h2 class="slot-name">Project Two</h2>
+      <p class="slot-desc">A conversion-first website built for a US local business owner who needed more than a good-looking site — they needed one that actually books customers.</p>
+      <div class="slot-meta">
+        <div class="slot-meta-row"><span class="slot-meta-lbl">Industry</span><span class="slot-meta-val">Local Service Business</span></div>
+        <div class="slot-meta-row"><span class="slot-meta-lbl">Deliverable</span><span class="slot-meta-val">Full website design & build</span></div>
+        <div class="slot-meta-row"><span class="slot-meta-lbl">Timeline</span><span class="slot-meta-val">Under 2 weeks</span></div>
+      </div>
+      <div class="slot-status"><span class="slot-status-dot"></span>Live preview coming soon</div>
+    </div>
+    <div>
+      <div class="browser-shell">
+        <div class="browser-bar">
+          <div class="browser-dots"><span class="bd-r"></span><span class="bd-y"></span><span class="bd-g"></span></div>
+          <div class="browser-url">in production...</div>
+        </div>
+        <div class="browser-screen">
+          <div class="screen-grid"></div>
+          <div class="screen-body">
+            <div class="screen-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <span class="screen-lbl">In Production</span>
+            <p class="screen-txt">This project is currently being built. Live preview dropping soon.</p>
+          </div>
+          <div class="skeleton"><div class="sk m"></div><div class="sk l"></div><div class="sk s"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- WHAT WE BUILD -->
+<section class="expect-section">
+  <p class="sec-eye">What We Build</p>
+  <h2 class="sec-title">Every Project.<br><em>One Standard.</em></h2>
+  <div class="expect-grid">
+    <div class="expect-item">
+      <div class="expect-num">01</div>
+      <div class="expect-t">Conversion First</div>
+      <p class="expect-d">Every headline, button, and layout choice is made with one question: does this move the visitor closer to taking action? Pretty is secondary. Performance is the goal.</p>
+    </div>
+    <div class="expect-item">
+      <div class="expect-num">02</div>
+      <div class="expect-t">Psychology-Led Copy</div>
+      <p class="expect-d">We write copy around how your customer's brain actually makes decisions — not around your company history. Loss framing, social proof, and specificity over vague claims.</p>
+    </div>
+    <div class="expect-item">
+      <div class="expect-num">03</div>
+      <div class="expect-t">Live in Under 2 Weeks</div>
+      <p class="expect-d">No 3-month agency timelines. We build fast, revise once, and launch. Your website starts working for you while competitors are still waiting on their agency.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="work-cta">
+  <div class="cta-inner">
+    <p class="cta-eye">Ready to Start?</p>
+    <h2 class="cta-h">Your Business<br>Could Be <em>Next.</em></h2>
+    <p class="cta-sub">We're taking on new projects now. Fill out a brief — it takes 3 minutes — and we'll reply within 24 hours with a clear plan and a fixed price.</p>
+    <div class="cta-row">
+      <a href="/index.html#contact" class="btn-fill">Get My Website →</a>
+      <a href="/pricing.html" class="btn-out">See Pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <img src="/logo.png" alt="LL" style="width:20px;height:20px;object-fit:contain;filter:invert(1);opacity:0.45;">
+    <span class="ft-copy" style="margin-left:2px;">Launch Layers</span>
+  </div>
+  <span class="ft-copy">© 2025 Launch Layers. All rights reserved.</span>
+  <a href="mailto:hello@launchlayers.in" class="ft-mail">hello@launchlayers.in</a>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* NAV */
+window.addEventListener('load',function(){setTimeout(function(){document.getElementById('main-nav').classList.add('ready');},100);});
+(function(){if(window.innerWidth<=768)return;window.addEventListener('scroll',function(){document.getElementById('main-nav').classList.toggle('scrolled',window.scrollY>60);},{passive:true});})();
+
+/* PAGE TRANSITION IN */
+(function(){var o=document.getElementById('page-transition');gsap.to(o,{opacity:0,duration:0.5,ease:'power2.out',onComplete:function(){o.style.display='none';}});})();
+
+/* PAGE TRANSITION OUT */
+document.querySelectorAll('a[href]').forEach(function(link){
+  var href=link.getAttribute('href');
+  if(!href||href.startsWith('#')||href.startsWith('mailto')||href.startsWith('http'))return;
+  link.addEventListener('click',function(e){
+    e.preventDefault();
+    var o=document.getElementById('page-transition');
+    o.style.display='block';
+    gsap.fromTo(o,{opacity:0},{opacity:1,duration:0.3,ease:'power2.in',onComplete:function(){window.location.href=href;}});
+  });
+});
+
+/* HEADER */
+gsap.fromTo('#he',{opacity:0,y:16},{opacity:1,y:0,duration:0.6,delay:0.3,ease:'power2.out'});
+gsap.fromTo('#hh',{opacity:0,y:32},{opacity:1,y:0,duration:0.8,delay:0.45,ease:'power3.out'});
+gsap.fromTo('#hs',{opacity:0,y:20},{opacity:1,y:0,duration:0.7,delay:0.6,ease:'power2.out'});
+
+/* SLOTS */
+gsap.utils.toArray('.project-slot').forEach(function(slot,i){
+  gsap.to(slot,{opacity:1,y:0,duration:0.8,ease:'power3.out',delay:i*0.1,
+    scrollTrigger:{trigger:slot,start:'top 85%',toggleActions:'play none none none'}});
+});
+
+/* EXPECT */
+gsap.utils.toArray('.expect-item').forEach(function(el,i){
+  gsap.fromTo(el,{opacity:0,y:24},{opacity:1,y:0,duration:0.65,ease:'power2.out',delay:i*0.1,
+    scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}});
+});
+
+/* CTA */
+gsap.utils.toArray('.cta-eye,.cta-h,.cta-sub,.cta-row').forEach(function(el,i){
+  gsap.fromTo(el,{opacity:0,y:20},{opacity:1,y:0,duration:0.65,ease:'power2.out',delay:i*0.1,
+    scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}});
+});
+</script>
+</body>
+</html>
