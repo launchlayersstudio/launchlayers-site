@@ -477,8 +477,9 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
   .cta-sec{padding:3.5rem 1.25rem;}
   footer{padding:1.75rem 1.25rem;}
 }
-.reveal-wrap{overflow:hidden;display:block;padding-bottom:0.18em;margin-bottom:-0.18em;}
-.reveal-line{display:block;}
+.slides-wrapper{overflow:hidden;}
+.panel{border-radius:12px;}
+.reveal-wrap{overflow:hidden;display:block;padding-bottom:0.18em;margin-bottom:-0.18em;}.reveal-line{display:block;}
 
 /* ── CONTACT SECTION ── */
 .contact-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:5rem;align-items:start;}
@@ -561,8 +562,9 @@ nav.nav-ready{opacity:1;}
   <button class="nav-cta" onclick="scrollToForm()">Get My Website →</button>
 </nav>
 
+<div class="slides-wrapper">
 <!-- ── HERO ── -->
-<section class="hero">
+<section class="hero panel">
   <p class="hero-eyebrow">Premium Web Design Studio</p>
   <h1 class="hero-h">
     <span class="reveal-wrap"><span class="reveal-line" id="hl1">A pretty website</span></span>
@@ -577,10 +579,11 @@ nav.nav-ready{opacity:1;}
 </section>
 
 <!-- ── FACT STRIP ── -->
-<section style="background:#f0ede6;padding:5rem 3.5rem 6rem;text-align:center;border-radius:50% 50% 0 0 / 80px 80px 0 0;margin-top:-60px;position:relative;z-index:2;box-shadow:0 -8px 0 0 #f0ede6;">
+<section class="panel" style="background:#f0ede6;padding:5rem 3.5rem 6rem;text-align:center;min-height:100vh;display:flex;align-items:center;justify-content:center;border-radius:50% 50% 0 0 / 80px 80px 0 0;margin-top:-60px;position:relative;z-index:2;">
   <p style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(1.75rem,3.5vw,3rem);line-height:1.1;letter-spacing:-0.025em;color:#080808;max-width:760px;margin:0 auto;">A website that doesn't convert isn't a website.<br>It's an <em style="font-style:italic;font-weight:400;color:rgba(8,8,8,0.38);">expensive mistake.</em></p>
 </section>
-  
+</div>
+
 <!-- ── CONTACT FORM ── -->
 <section class="pad" id="contact" style="background:var(--bg2);border-top:none;">
   <div class="contact-grid">
@@ -1143,6 +1146,26 @@ window.addEventListener('load',function(){
         window.location.href=href;
       }});
     });
+  });
+})();
+
+/* ── PINNED PANELS ── */
+(function(){
+  var panels=gsap.utils.toArray('.panel');
+  panels.pop();
+  panels.forEach(function(panel){
+    gsap.timeline({
+      scrollTrigger:{
+        trigger:panel,
+        start:'bottom bottom',
+        end:'bottom top',
+        pinSpacing:false,
+        pin:true,
+        scrub:true
+      }
+    })
+    .fromTo(panel,{scale:1,opacity:1},{scale:0.88,opacity:0.5,duration:0.9})
+    .to(panel,{opacity:0,duration:0.1});
   });
 })();
 </script>
