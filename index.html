@@ -1154,9 +1154,9 @@ function scrollToForm(){
   svg.innerHTML='<defs><linearGradient id="ssGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f0ede6" stop-opacity="0"/><stop offset="100%" stop-color="#f0ede6" stop-opacity="1"/></linearGradient><filter id="ssGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.2"/></filter></defs>';
   function spawn(){
     var rect=svg.getBoundingClientRect();
-    var startX=Math.random()*rect.width*0.6;
-    var startY=Math.random()*rect.height*0.35;
-    var angle=Math.random()*25+25;
+    var startX=Math.random()*rect.width;
+    var startY=Math.random()*rect.height;
+    var angle=Math.random()*360;
     var rad=angle*Math.PI/180;
     var speed=Math.random()*(maxSpeed-minSpeed)+minSpeed;
     var dist=Math.max(rect.width,rect.height)*1.3;
