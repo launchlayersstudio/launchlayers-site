@@ -480,7 +480,8 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
 .slides-wrapper{overflow:hidden;}
 .panel{border-radius:12px;}
 .reveal-wrap{overflow:hidden;display:block;padding-bottom:0.18em;margin-bottom:-0.18em;}.reveal-line{display:block;}
-
+.blur-word{display:inline-block;will-change:filter,opacity;}
+  
 /* ── CONTACT SECTION ── */
 .contact-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:5rem;align-items:start;}
 .contact-sub{font-size:0.9375rem;color:var(--muted);line-height:1.75;font-weight:300;margin-bottom:2rem;max-width:380px;}
@@ -840,7 +841,7 @@ document.getElementById('f-email').addEventListener('input',function(){this.styl
 <!-- ── CTA ── -->
 <section class="cta-sec">
 <h2 class="cta-h">We Build Websites<br>That <em>Actually Convert.</em></h2>
-<p style="font-size:1rem;color:var(--muted);font-weight:300;margin-bottom:2rem;max-width:480px;">Not pretty websites. Not award-winning websites. Websites that turn visitors into paying customers — built around psychology, copy, and conversion architecture.</p>
+<p class="cta-sub" style="font-size:1rem;color:var(--muted);font-weight:300;margin-bottom:2rem;max-width:480px;">Not pretty websites. Not award-winning websites. Websites that turn visitors into paying customers — built around psychology, copy, and conversion architecture.</p>
   <div class="cta-row">
     <button class="btn-fill" onclick="scrollToForm()">Get My Website →</button>
     <a href="#contact" class="btn-out" onclick="event.preventDefault();scrollToForm();">Ask a Question</a>
@@ -1099,6 +1100,20 @@ tl.fromTo('#hl1',{yPercent:105},{yPercent:0,duration:1},0.1)
   .fromTo('#hl2',{yPercent:105},{yPercent:0,duration:1},0.22)
   .fromTo('#hl3',{yPercent:105},{yPercent:0,duration:1},0.34)
   .fromTo('#hl4',{yPercent:105},{yPercent:0,duration:1},0.46);
+
+/* ── BLUR-IN TEXT REVEAL ── */
+function initBlurIn(selector){
+  document.querySelectorAll(selector).forEach(function(el){
+    var words=el.textContent.split(/(\s+)/);
+    el.innerHTML=words.map(function(w){return /\S/.test(w)?'<span class="blur-word">'+w+'</span>':w;}).join('');
+    var spans=el.querySelectorAll('.blur-word');
+    gsap.set(spans,{opacity:0,filter:'blur(10px)'});
+    ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter:function(){
+      gsap.to(spans,{opacity:1,filter:'blur(0px)',duration:0.6,ease:'power2.out',stagger:0.045});
+    }});
+  });
+}
+initBlurIn('.hero-sub, .cta-sub');
 
 /* ── GSAP SCROLL REVEALS ── */
 gsap.utils.toArray('.svc,.proc-grid > div,.faq-item,.ct-item').forEach(function(el,i){
