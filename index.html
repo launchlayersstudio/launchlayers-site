@@ -62,13 +62,13 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;o
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 3.5rem;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);background:rgba(8,8,8,0.75);border-bottom:1px solid var(--border);}.logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.9375rem;color:var(--text);letter-spacing:0.01em;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 3.5rem;background:#ffffff;border-bottom:1px solid rgba(0,0,0,0.08);}.logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.9375rem;color:#141414;letter-spacing:0.01em;}
 .nav-links{display:flex;gap:2.5rem;}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:0.8125rem;letter-spacing:0.04em;transition:color 0.2s;position:relative;}
-.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--text);transition:width 0.3s ease;}
-.nav-links a:hover::after{width:100%;}.nav-links a:hover{color:var(--text);}
-.nav-cta{background:var(--text);color:#080808;padding:0.55rem 1.25rem;font-size:0.8125rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0.01em;transition:opacity 0.2s;border-radius:50px;cursor:pointer;border:none;}
+.nav-links a{color:rgba(20,20,20,0.55);text-decoration:none;font-size:0.8125rem;letter-spacing:0.04em;transition:color 0.2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:#141414;transition:width 0.3s ease;}
+.nav-links a:hover::after{width:100%;}.nav-links a:hover{color:#141414;}
+.nav-cta{background:#141414;color:#ffffff;padding:0.55rem 1.25rem;font-size:0.8125rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0.01em;transition:opacity 0.2s;border-radius:50px;cursor:pointer;border:none;}
 .nav-cta:hover{opacity:0.82;}
 
 /* ── HERO ── */
@@ -415,8 +415,8 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
 /* ── MOBILE ── */
 @media(max-width:768px){
   /* Nav */
-  nav{padding:0.875rem 1.25rem;top:0.75rem;left:0.75rem;right:0.75rem;border-radius:16px;background:rgba(255,255,255,0.06);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%);border:1px solid rgba(255,255,255,0.12);box-shadow:0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.1);transition:left 0.5s cubic-bezier(0.25,0.46,0.45,0.94),right 0.5s cubic-bezier(0.25,0.46,0.45,0.94),top 0.5s cubic-bezier(0.25,0.46,0.45,0.94),border-radius 0.5s cubic-bezier(0.25,0.46,0.45,0.94),box-shadow 0.5s ease,border-color 0.5s ease,background 0.5s ease;}
-  nav.scrolled{top:0;left:0;right:0;border-radius:0;border:none;border-bottom:1px solid rgba(255,255,255,0.1);box-shadow:0 4px 24px rgba(0,0,0,0.3);}
+  nav{padding:0.875rem 1.25rem;top:0.75rem;left:0.75rem;right:0.75rem;border-radius:16px;background:#ffffff;border:1px solid rgba(0,0,0,0.08);box-shadow:0 8px 32px rgba(0,0,0,0.12);transition:left 0.5s cubic-bezier(0.25,0.46,0.45,0.94),right 0.5s cubic-bezier(0.25,0.46,0.45,0.94),top 0.5s cubic-bezier(0.25,0.46,0.45,0.94),border-radius 0.5s cubic-bezier(0.25,0.46,0.45,0.94),box-shadow 0.5s ease,border-color 0.5s ease,background 0.5s ease;}
+  nav.scrolled{top:0;left:0;right:0;border-radius:0;border:none;border-bottom:1px solid rgba(0,0,0,0.08);box-shadow:0 4px 24px rgba(0,0,0,0.1);}
   .nav-links{display:none;}
   .nav-cta{padding:0.5rem 1rem;font-size:0.75rem;}
 
@@ -495,22 +495,18 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
   nav{
     left:1.5rem;right:1.5rem;top:1rem;
     border-radius:20px;
-    background:rgba(255,255,255,0.06);
-    backdrop-filter:blur(40px) saturate(180%);
-    -webkit-backdrop-filter:blur(40px) saturate(180%);
-    border:1px solid rgba(255,255,255,0.12);
-    box-shadow:0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 -1px 0 rgba(0,0,0,0.2);
+    background:#ffffff;
+    border:1px solid rgba(0,0,0,0.08);
+    box-shadow:0 8px 32px rgba(0,0,0,0.12);
     transition:left 0.5s cubic-bezier(0.25,0.46,0.45,0.94),right 0.5s cubic-bezier(0.25,0.46,0.45,0.94),top 0.5s cubic-bezier(0.25,0.46,0.45,0.94),border-radius 0.5s cubic-bezier(0.25,0.46,0.45,0.94),box-shadow 0.5s ease,border-color 0.5s ease,background 0.5s ease,opacity 0.6s ease;
   }
   nav.scrolled{
     left:0;right:0;top:0;
     border-radius:0;
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(40px) saturate(180%);
-    -webkit-backdrop-filter:blur(40px) saturate(180%);
+    background:#ffffff;
     border:none;
-    border-bottom:1px solid rgba(255,255,255,0.1);
-    box-shadow:0 1px 0 rgba(255,255,255,0.05),0 4px 24px rgba(0,0,0,0.3);
+    border-bottom:1px solid rgba(0,0,0,0.08);
+    box-shadow:0 1px 0 rgba(0,0,0,0.04),0 4px 24px rgba(0,0,0,0.1);
   }
 }
   
@@ -550,7 +546,7 @@ nav.nav-ready{opacity:1;}
 <!-- ── NAV ── -->
 <nav>
   <a href="#" class="logo-wrap">
-    <img src="/logo.png" alt="LL" style="width:28px;height:28px;object-fit:contain;filter:invert(1);">
+    <img src="/logo.png" alt="LL" style="width:28px;height:28px;object-fit:contain;">
     <span class="logo-text">Launch Layers</span>
   </a>
   <div class="nav-links">
