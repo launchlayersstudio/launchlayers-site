@@ -77,6 +77,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0;background:transpa
 .nav-links a:hover::after{width:100%;}.nav-links a:hover{color:var(--text);}
 .nav-cta{background:var(--text);color:#080808;padding:0.55rem 1.25rem;font-size:0.8125rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0.01em;transition:opacity 0.2s;border-radius:50px;cursor:pointer;border:none;}
 .nav-cta:hover{opacity:0.82;}
+.nav-right{display:flex;align-items:center;gap:0.75rem;}
+.nav-burger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:34px;height:34px;background:none;border:none;cursor:pointer;padding:0;flex-shrink:0;}
+.nav-burger span{display:block;width:20px;height:2px;background:var(--text);border-radius:2px;transition:transform 0.3s ease,opacity 0.3s ease;}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-burger.open span:nth-child(2){opacity:0;}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.sidebar-overlay{position:fixed;inset:0;z-index:200;background:rgba(4,4,4,0.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity 0.35s ease;}
+.sidebar-overlay.active{opacity:1;pointer-events:all;}
+.sidebar-panel{position:fixed;top:0;right:0;height:100%;width:78%;max-width:320px;background:var(--bg2);border-left:1px solid var(--border2);padding:5.5rem 1.75rem 2rem;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);}
+.sidebar-overlay.active .sidebar-panel{transform:translateX(0);}
+.sidebar-close{position:absolute;top:1.25rem;right:1.25rem;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--muted);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1.25rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-family:'Plus Jakarta Sans',sans-serif;line-height:1;}
+.sidebar-close:hover{background:rgba(255,255,255,0.1);color:var(--text);}
+.sidebar-links{display:flex;flex-direction:column;margin-bottom:auto;}
+.sidebar-links a{color:var(--text);text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:1.1rem;padding:1.1rem 0;border-bottom:1px solid var(--border);letter-spacing:-0.01em;}
+.sidebar-links a:last-child{border-bottom:none;}
+.sidebar-cta{width:100%;background:var(--text);color:#080808;padding:0.9rem 1.5rem;font-size:0.9rem;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;border:none;border-radius:50px;cursor:pointer;margin-top:2rem;letter-spacing:0.01em;}
 
 /* ── HERO ── */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:7rem 3.5rem 8rem;position:relative;overflow:hidden;background:#1a1a1c;}
@@ -410,7 +426,7 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
   
 /* ── TABLET ── */
 @media(max-width:1024px){
-  nav{padding:1.25rem 2rem;}
+  .nav-glass-content{padding:1.25rem 2rem;}
   .hero{padding:0 2rem;}
   .hero-bottom{left:2rem;}
   section.pad{padding:5rem 2rem;}
@@ -426,6 +442,7 @@ footer{border-top:1px solid var(--border);padding:2.25rem 3.5rem;display:flex;al
   nav.scrolled{top:0;left:0;right:0;border-radius:0;border:none;border-bottom:1px solid rgba(255,255,255,0.1);box-shadow:0 4px 24px rgba(0,0,0,0.3);}
   .nav-glass-content{padding:0.875rem 1.25rem;}
   .nav-links{display:none;}
+  .nav-burger{display:flex;}
   .nav-cta{padding:0.5rem 1rem;font-size:0.75rem;}
 
   /* Hero */
@@ -574,9 +591,28 @@ nav.nav-ready{opacity:1;}
       <a href="/pricing.html">Pricing</a>
       <a href="/work.html">Work</a>
     </div>
-    <button class="nav-cta" onclick="scrollToForm()">Get My Website →</button>
+    <div class="nav-right">
+      <button class="nav-cta" onclick="scrollToForm()">Get My Website →</button>
+      <button class="nav-burger" id="nav-burger" aria-label="Open menu" onclick="toggleSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </nav>
+
+<div class="sidebar-overlay" id="sidebar-overlay">
+  <div class="sidebar-panel">
+    <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">×</button>
+    <div class="sidebar-links">
+      <a href="#contact">Contact</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/work.html">Work</a>
+    </div>
+    <button class="sidebar-cta" onclick="closeSidebar();scrollToForm();">Get My Website →</button>
+  </div>
+</div>
 
 <div class="slides-wrapper">
 <!-- ── HERO ── -->
@@ -1013,6 +1049,25 @@ document.querySelectorAll('.faq-item').forEach(function(item){
   });
 });
     
+/* ── MOBILE SIDEBAR ── */
+function toggleSidebar(){
+  if(document.getElementById('sidebar-overlay').classList.contains('active')){closeSidebar();}
+  else{
+    document.getElementById('sidebar-overlay').classList.add('active');
+    document.getElementById('nav-burger').classList.add('open');
+    document.body.classList.add('no-scroll');
+  }
+}
+function closeSidebar(){
+  document.getElementById('sidebar-overlay').classList.remove('active');
+  document.getElementById('nav-burger').classList.remove('open');
+  document.body.classList.remove('no-scroll');
+}
+document.getElementById('sidebar-close').addEventListener('click',closeSidebar);
+document.getElementById('sidebar-overlay').addEventListener('click',function(e){if(e.target===this)closeSidebar();});
+document.querySelectorAll('.sidebar-links a').forEach(function(a){a.addEventListener('click',closeSidebar);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSidebar();});
+
 /* ── SCROLL TO FORM ── */
 function scrollToForm(){
   document.getElementById('contact').scrollIntoView({behavior:'smooth'});
