@@ -1151,46 +1151,49 @@ function scrollToForm(){
   var svg=document.getElementById('shooting-stars-svg');
   if(!svg)return;
   var minSpeed=8,maxSpeed=18,minDelay=4200,maxDelay=8700;
-  svg.innerHTML='<defs><linearGradient id="ssGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f0ede6" stop-opacity="0"/><stop offset="100%" stop-color="#f0ede6" stop-opacity="0.9"/></linearGradient></defs>';
+  svg.innerHTML='<defs><linearGradient id="ssGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f0ede6" stop-opacity="0"/><stop offset="100%" stop-color="#f0ede6" stop-opacity="1"/></linearGradient><filter id="ssGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.2"/></filter></defs>';
   function spawn(){
     var rect=svg.getBoundingClientRect();
-    var startX=Math.random()*rect.width*0.7;
-    var startY=Math.random()*rect.height*0.4;
-    var angle=Math.random()*30+20;
+    var startX=Math.random()*rect.width*0.6;
+    var startY=Math.random()*rect.height*0.35;
+    var angle=Math.random()*25+25;
     var rad=angle*Math.PI/180;
     var speed=Math.random()*(maxSpeed-minSpeed)+minSpeed;
-    var dist=Math.max(rect.width,rect.height)*1.2;
+    var dist=Math.max(rect.width,rect.height)*1.3;
     var dx=Math.cos(rad)*dist;
     var dy=Math.sin(rad)*dist;
     var star=document.createElementNS('http://www.w3.org/2000/svg','rect');
-    star.setAttribute('width',10);
-    star.setAttribute('height',1);
-    star.setAttribute('rx',0.5);
+    star.setAttribute('width',70);
+    star.setAttribute('height',2);
+    star.setAttribute('rx',1);
     star.setAttribute('fill','url(#ssGrad)');
+    star.setAttribute('filter','url(#ssGlow)');
+    star.setAttribute('x',startX);
+    star.setAttribute('y',startY);
+    star.setAttribute('transform','rotate('+angle+' '+startX+' '+startY+')');
     svg.appendChild(star);
     var duration=(dist/speed)*9;
     var startTime=null;
     function animate(ts){
       if(!startTime)startTime=ts;
       var progress=(ts-startTime)/duration;
-      if(progress>=1){svg.removeChild(star);scheduleNext();return;}
+      if(progress>=1){if(star.parentNode)svg.removeChild(star);scheduleNext();return;}
       var curX=startX+dx*progress;
       var curY=startY+dy*progress;
       star.setAttribute('x',curX);
       star.setAttribute('y',curY);
       star.setAttribute('transform','rotate('+angle+' '+curX+' '+curY+')');
-      star.setAttribute('opacity',1-progress*0.7);
+      star.setAttribute('opacity',1-progress*0.6);
       requestAnimationFrame(animate);
     }
     requestAnimationFrame(animate);
   }
-  function scheduleNext(){
-    var delay=Math.random()*(maxDelay-minDelay)+minDelay;
+  function scheduleNext(first){
+    var delay=first?800:Math.random()*(maxDelay-minDelay)+minDelay;
     setTimeout(spawn,delay);
   }
-  scheduleNext();
+  scheduleNext(true);
 })();
-
     /* ── HERO PARALLAX ── */
 (function(){
   var hero=document.querySelector('.hero');
