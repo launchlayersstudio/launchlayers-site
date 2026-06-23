@@ -253,7 +253,7 @@ lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add((time) => { lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
 
-window.addEventListener('load',function(){setTimeout(function(){document.querySelector('nav').classList.add('nav-ready');},100);});
+document.addEventListener('DOMContentLoaded',function(){document.querySelector('nav').classList.add('nav-ready');});
 window.addEventListener('scroll',function(){document.querySelector('nav').classList.toggle('scrolled',window.scrollY>60);},{passive:true});
 
 gsap.utils.toArray('.case-item,.case-copy p').forEach(function(el,i){
