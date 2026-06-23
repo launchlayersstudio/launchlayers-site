@@ -86,7 +86,8 @@ section.pad{padding:5rem 3.5rem;}
 .dots{display:flex;gap:5px;}
 .dots span{width:9px;height:9px;border-radius:50%;}
 .dr{background:#ff5f57;}.dy{background:#febc2e;}.dg{background:#28c840;}
-.bwin{height:460px;overflow:hidden;position:relative;}
+.bwin{height:auto;aspect-ratio:1440/900;overflow:hidden;position:relative;}
+.bwin iframe{position:absolute;top:0;left:0;transform-origin:top left;border:none;pointer-events:none;}
 .case-cta{margin-top:2rem;}
 
 .stats-strip{padding:4rem 3.5rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2);display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;text-align:center;}
@@ -200,7 +201,7 @@ footer{border-top:1px solid var(--border);padding:2rem 3.5rem;display:flex;align
     </div>
     <div class="browser" id="case-preview" onclick="openPreview()">
       <div class="bbar"><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
-      <div class="bwin"><iframe src="https://hayamakeover.com" loading="lazy" style="width:100%;height:100%;border:none;pointer-events:none;"></iframe></div>
+      <div class="bwin"><iframe id="case-preview-frame" src="https://hayamakeover.com" loading="lazy" scrolling="no" style="pointer-events:none;"></iframe></div>
     </div>
   </div>
 </section>
@@ -254,6 +255,22 @@ gsap.ticker.add((time) => { lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
 
 document.addEventListener('DOMContentLoaded',function(){document.querySelector('nav').classList.add('nav-ready');});
+
+function fitSitePreview(iframe){
+  var DESIGN_W=1440;
+  function scaleIt(){
+    var w=iframe.parentElement.clientWidth;
+    if(!w)return;
+    var scale=w/DESIGN_W;
+    iframe.style.width=DESIGN_W+'px';
+    iframe.style.height=Math.round(DESIGN_W*0.625)+'px';
+    iframe.style.transform='scale('+scale+')';
+  }
+  scaleIt();
+  window.addEventListener('resize',scaleIt);
+}
+var casePreviewFrame=document.getElementById('case-preview-frame');
+if(casePreviewFrame)fitSitePreview(casePreviewFrame);
 window.addEventListener('scroll',function(){document.querySelector('nav').classList.toggle('scrolled',window.scrollY>60);},{passive:true});
 
 gsap.utils.toArray('.case-item,.case-copy p').forEach(function(el,i){
