@@ -1149,24 +1149,5 @@ window.addEventListener('load',function(){
   });
 })();
 
-/* ── PINNED PANELS ── */
-(function(){
-  var panels=gsap.utils.toArray('.panel');
-  panels.pop();
-  panels.forEach(function(panel){
-    gsap.timeline({
-      scrollTrigger:{
-        trigger:panel,
-        start:'bottom bottom',
-        end:'bottom top',
-        pinSpacing:false,
-        pin:true,
-        scrub:true
-      }
-    })
-    .fromTo(panel,{scale:1,opacity:1},{scale:0.88,opacity:0.5,duration:0.9})
-    .to(panel,{opacity:0,duration:0.1});
-  });
-})();
 </script>
 </html>
