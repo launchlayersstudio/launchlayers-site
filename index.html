@@ -1322,11 +1322,10 @@ gsap.utils.toArray('.sec-eye,.sec-title,.cta-h,.contact-sub').forEach(function(e
     nav.classList.toggle('scrolled',window.scrollY>60);
   },{passive:true});
 })();
+    
     /* ── NAV FADE IN ── */
-window.addEventListener('load',function(){
-  setTimeout(function(){
-    document.querySelector('nav').classList.add('nav-ready');
-  },100);
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelector('nav').classList.add('nav-ready');
 });
 
 /* ── PAGE TRANSITION ── */
