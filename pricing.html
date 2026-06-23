@@ -235,6 +235,7 @@ footer{border-top:1px solid var(--border);padding:2rem 3.5rem;display:flex;align
 /* ── TEXT REVEAL ── */
 .reveal-wrap{overflow:hidden;display:block;padding-bottom:0.18em;margin-bottom:-0.18em;}
 .reveal-line{display:block;}
+.blur-word{display:inline-block;will-change:filter,opacity;}
   @media(min-width:769px){
   nav{
     left:1.5rem;right:1.5rem;top:1rem;
@@ -572,8 +573,8 @@ nav.nav-ready{opacity:1;}
 
 <script>
 /* ── MODAL ── */
-function openModal(){document.getElementById('modal-overlay').classList.add('active');document.body.classList.add('no-scroll');}
-function closeModal(){document.getElementById('modal-overlay').classList.remove('active');document.body.classList.remove('no-scroll');}
+function openModal(){document.getElementById('modal-overlay').classList.add('active');document.body.classList.add('no-scroll');gsap.to(modalSubSpans,{opacity:1,filter:'blur(0px)',duration:0.6,ease:'power2.out',stagger:0.045,overwrite:true});}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('active');document.body.classList.remove('no-scroll');gsap.set(modalSubSpans,{opacity:0,filter:'blur(10px)'});}
 document.getElementById('modal-close-btn').addEventListener('click',closeModal);
 document.getElementById('modal-overlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
@@ -642,6 +643,22 @@ const lenis = new Lenis({duration:1.2,easing:(t)=>Math.min(1,1.001-Math.pow(2,-1
 gsap.ticker.add((time) => { lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
 
+/* ── BLUR-IN TEXT REVEAL ── */
+function initBlurIn(el){
+  var words=el.textContent.split(/(\s+)/);
+  el.innerHTML=words.map(function(w){return /\S/.test(w)?'<span class="blur-word">'+w+'</span>':w;}).join('');
+  return el.querySelectorAll('.blur-word');
+}
+document.querySelectorAll('.hero-sub, .cta-sub').forEach(function(el){
+  var spans=initBlurIn(el);
+  gsap.set(spans,{opacity:0,filter:'blur(10px)'});
+  ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter:function(){
+    gsap.to(spans,{opacity:1,filter:'blur(0px)',duration:0.6,ease:'power2.out',stagger:0.045});
+  }});
+});
+var modalSubSpans=initBlurIn(document.getElementById('modal-sub'));
+gsap.set(modalSubSpans,{opacity:0,filter:'blur(10px)'});
+
 /* ── HERO REVEAL ── */
 var tl = gsap.timeline({defaults:{ease:'power4.out'}});
 tl.fromTo('#hl1',{yPercent:105},{yPercent:0,duration:1},0.1)
@@ -657,8 +674,7 @@ gsap.utils.toArray('.pkg,.why-item,.g-item').forEach(function(el,i){
      delay:(i%4)*0.08}
   );
 });
-gsap.utils.toArray('.sec-eye,.sec-title,.cta-h,.cta-sub').forEach(function(el){
-  gsap.fromTo(el,
+gsap.utils.toArray('.sec-eye,.sec-title,.cta-h').forEach(function(el){  gsap.fromTo(el,
     {opacity:0,y:30},
     {opacity:1,y:0,duration:0.9,ease:'power3.out',
      scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}}
